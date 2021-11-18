@@ -118,7 +118,7 @@ for epoch_count in range(epoch):
             for j in range(grad_W3.shape[0]):
                 for k in range(grad_W3.shape[1]):
                     grad_W3[j, k] += 2 * (S3[j, 0] - reshape_train_lables[j, 0]) * S3[j, 0] * (1 - S3[j, 0]) * S2[k, 0]
-                # print(grad_W3)
+
             # bias
             for j in range(grad_b3.shape[0]):
                 grad_b3[j, 0] += 2 * (S3[j, 0] - reshape_train_lables[j, 0]) * S3[j, 0] * (1 - S3[j, 0])

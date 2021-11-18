@@ -65,7 +65,7 @@ def sigmoid(x):
     ans=1/(1+np.exp(-x))
     return ans
 def result(x,w,b):
-    return np.dot(w,x)+b
+    return np.cross(w,x)+b
 
 np.random.seed(1)
 n_x=102

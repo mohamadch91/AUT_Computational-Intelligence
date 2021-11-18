@@ -89,7 +89,8 @@ W2 = np.random.randn(n_h_2, n_h_1)
 b2 = np.zeros((n_h_2, 1))
 W3 = np.random.randn(n_y, n_h_2)
 b3 = np.zeros((n_y, 1))
-costs = []
+costs1 = []
+costs2=[]
 for epoch_count in range(epoch):
     # shuffle
     total_cost = 0
@@ -149,13 +150,24 @@ for epoch_count in range(epoch):
             b3 = b3 - (learning_rate * (grad_b3 / batch_size))
             b2 = b2 - (learning_rate * (grad_b2 / batch_size))
             b1 = b1 - (learning_rate * (grad_b1 / batch_size))
-
-    costs.append(total_cost / 200)
+    cost = 0
+    for train_data in train_set[:100]:
+        S0 = train_data[0]
+        S1 = sigmoid(W1 @ S0 + b1)
+        S2 = sigmoid(W2 @ S1 + b2)
+        S3 = sigmoid(W3 @ S2 + b3)
+        for j in range(4):
+            cost += np.power((S3[j, 0] - train_data[1][j, 0]), 2)
+    costs1.append(total_cost / 1962)
+    costs2.append(cost / 1962)
     print("cost of this epoch is " + str(total_cost))
-print("average cost : " + str(sum(costs)))
+print("average cost epochs : " + str(sum(costs1)))
+print("average cost all of epoch : " + str(sum(costs2)))
 epoch_list = [c + 1 for c in range(epoch)]
-print(epoch_list,costs)
-plt.plot(epoch_list, costs)
+
+plt.plot(epoch_list, costs1)
+plt.plot(epoch_list, costs2)
+
 plt.show()
 counter = 0
 for i in range(len(minimize_train_set)):
@@ -171,6 +183,8 @@ for i in range(len(minimize_train_set)):
         counter += 1
 print("Accuracy is : " + str(counter / 200))
 
+end_time = datetime.now()
+print('Duration: {}'.format(end_time - start_time))
 
 
 
