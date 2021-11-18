@@ -76,7 +76,7 @@ np.random.seed(1)
 epoch = 10
 batch_size = 10
 batch_num = int(200 / 10)
-learning_rate = 0.3
+learning_rate = 0.15
 np.random.seed(1)
 n_x = 102
 n_h_1 = 150
@@ -144,12 +144,12 @@ for epoch_count in range(epoch):
             # bias
             grad_b1 += delta_2 * S1 * (1 - S1)
 
-            W3 = W3 - (learning_rate * (grad_W3 / batch_size))
-            W2 = W2 - (learning_rate * (grad_W2 / batch_size))
-            W1 = W1 - (learning_rate * (grad_W1 / batch_size))
-            b3 = b3 - (learning_rate * (grad_b3 / batch_size))
-            b2 = b2 - (learning_rate * (grad_b2 / batch_size))
-            b1 = b1 - (learning_rate * (grad_b1 / batch_size))
+        W3 = W3 - (learning_rate * (grad_W3 / batch_size))
+        W2 = W2 - (learning_rate * (grad_W2 / batch_size))
+        W1 = W1 - (learning_rate * (grad_W1 / batch_size))
+        b3 = b3 - (learning_rate * (grad_b3 / batch_size))
+        b2 = b2 - (learning_rate * (grad_b2 / batch_size))
+        b1 = b1 - (learning_rate * (grad_b1 / batch_size))
     cost = 0
     for train_data in train_set[:100]:
         S0 = train_data[0]

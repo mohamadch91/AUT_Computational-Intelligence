@@ -154,12 +154,12 @@ for epoch_count in range(epoch):
             for m in range(grad_b1.shape[0]):
                 grad_b1[m, 0] += delta_2[m, 0] * S1[m, 0] * (1 - S1[m, 0])
 
-            W3 = W3 - (learning_rate * (grad_W3 / batch_size))
-            W2 = W2 - (learning_rate * (grad_W2 / batch_size))
-            W1 = W1 - (learning_rate * (grad_W1 / batch_size))
-            b3 = b3 - (learning_rate * (grad_b3 / batch_size))
-            b2 = b2 - (learning_rate * (grad_b2 / batch_size))
-            b1 = b1 - (learning_rate * (grad_b1 / batch_size))
+        W3 = W3 - (learning_rate * (grad_W3 / batch_size))
+        W2 = W2 - (learning_rate * (grad_W2 / batch_size))
+        W1 = W1 - (learning_rate * (grad_W1 / batch_size))
+        b3 = b3 - (learning_rate * (grad_b3 / batch_size))
+        b2 = b2 - (learning_rate * (grad_b2 / batch_size))
+        b1 = b1 - (learning_rate * (grad_b1 / batch_size))
 
 
     costs.append(total_cost / 200)
