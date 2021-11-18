@@ -60,7 +60,7 @@ for i in range(len(test_set_features)):
 # shuffle
 random.shuffle(train_set)
 random.shuffle(test_set)
-minimize_train_set=train_set[:200]
+minimize_train_set = train_set[:200]
 
 
 def sigmoid(x):
@@ -90,7 +90,7 @@ b2 = np.zeros((n_h_2, 1))
 W3 = np.random.randn(n_y, n_h_2)
 b3 = np.zeros((n_y, 1))
 costs1 = []
-costs2=[]
+costs2 = []
 for epoch_count in range(epoch):
     # shuffle
     total_cost = 0
@@ -185,12 +185,3 @@ print("Accuracy is : " + str(counter / 200))
 
 end_time = datetime.now()
 print('Duration: {}'.format(end_time - start_time))
-
-
-
-
-
-
-
-
-

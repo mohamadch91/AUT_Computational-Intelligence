@@ -60,12 +60,13 @@ for i in range(len(test_set_features)):
 # shuffle
 random.shuffle(train_set)
 random.shuffle(test_set)
-minimize_train_set=train_set[:1962]
+minimize_train_set = train_set[:1962]
 
 
 def sigmoid(x):
     ans = 1 / (1 + np.exp(-x))
     return ans
+
 
 np.random.seed(1)
 epoch = 10
@@ -85,15 +86,15 @@ b2 = np.zeros((n_h_2, 1))
 W3 = np.random.randn(n_y, n_h_2)
 b3 = np.zeros((n_y, 1))
 costs1 = []
-costs2=[]
+costs2 = []
 for epoch_count in range(epoch):
     # shuffle
     total_cost = 0
-    # print("epoch_count  " + str(epoch_count + 1))
+    print("epoch_count  " + str(epoch_count + 1))
     random.shuffle(train_set)
     minimize_train_set = train_set[:1962]
     for batch_count in range(batch_size):
-        # print("batch count " + str(batch_count + 1))
+        print("batch count " + str(batch_count + 1))
         grad_W1 = np.zeros((n_h_1, n_x))
         grad_W2 = np.zeros((n_h_2, n_h_1))
         grad_W3 = np.zeros((n_y, n_h_2))
@@ -101,7 +102,7 @@ for epoch_count in range(epoch):
         grad_b2 = np.zeros((n_h_2, 1))
         grad_b3 = np.zeros((n_y, 1))
         for i in range(batch_num):
-            # print("mini batch num is " + str(i + 1))
+            print("mini batch num is " + str(i + 1))
             reshape_train = minimize_train_set[batch_count * 196 + i][0]
             reshape_train_lables = minimize_train_set[batch_count * 196 + i][1]
             S1 = sigmoid(W1 @ reshape_train + b1)
@@ -154,7 +155,7 @@ for epoch_count in range(epoch):
         for j in range(4):
             cost += np.power((S3[j, 0] - train_data[1][j, 0]), 2)
     costs1.append(total_cost / 1962)
-    costs2.append(cost/1962)
+    costs2.append(cost / 1962)
     print("cost of this epoch is " + str(total_cost))
 print("average cost epochs : " + str(sum(costs1)))
 print("average cost all of epoch : " + str(sum(costs2)))
@@ -179,9 +180,9 @@ for i in range(len(minimize_train_set)):
 print("Accuracy is : " + str(counter / 1962))
 
 ##real values
-total_cost=0
-counter=0
-costs=[]
+total_cost = 0
+counter = 0
+costs = []
 for i in range(len(test_set)):
     reshape_test = test_set[i][0]
     reshape_test_label = test_set[i][1]
@@ -204,15 +205,3 @@ print("cost of this time  " + str(total_cost))
 print("average cost : " + str(sum(costs)))
 end_time = datetime.now()
 print('Duration: {}'.format(end_time - start_time))
-
-
-
-
-
-
-
-
-
-
-
-
