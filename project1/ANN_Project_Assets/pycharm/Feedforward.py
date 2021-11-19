@@ -60,43 +60,52 @@ for i in range(len(test_set_features)):
 # shuffle
 random.shuffle(train_set)
 random.shuffle(test_set)
+# train with  200 data
 minimize_train_set = train_set[:200]
 
 
+# define sigmoid function to calculate sigmoid
 def sigmoid(x):
     ans = 1 / (1 + np.exp(-x))
     return ans
 
 
-def result(x, w, b):
-    return np.cross(w, x) + b
-
-
+# create random seed
 np.random.seed(1)
+# number of first input layer perceptrons
 n_x = 102
+# perecptron number of first hidden layer
 n_h_1 = 150
+##perecptron number of second hidden layer
 n_h_2 = 60
+# last layer
 n_y = 4
-# intialize the layers here
+# make weights and bias for all layers
 W1 = np.random.normal(size=(n_h_1, n_x))
 b1 = np.zeros((n_h_1, 1))
 W2 = np.random.normal(size=(n_h_2, n_h_1))
 b2 = np.zeros((n_h_2, 1))
 W3 = np.random.normal(size=(n_y, n_h_2))
 b3 = np.zeros((n_y, 1))
-counter = 0
 
+counter = 0
+# feeddorward for all datas
 for i in range(len(minimize_train_set)):
+    # label and fetures of one input
     reshape_train = minimize_train_set[i][0]
     reshape_train_label = minimize_train_set[i][1]
-    S0 = reshape_train
-    S1 = sigmoid(W1 @ S0 + b1)
+    # calculate precptron output with activiation sigmoid function
+    S1 = sigmoid(W1 @ reshape_train + b1)
     S2 = sigmoid(W2 @ S1 + b2)
     S3 = sigmoid(W3 @ S2 + b3)
+    # find  index of maximum  of output
     index = np.where(S3 == np.amax(S3))
+    # find index of maximum of input label
     max_index = np.where(reshape_train_label == np.amax(reshape_train_label))
     if index == max_index:
+        # if guess is correct counter++
         counter += 1
+# print accuracy and time of execution
 print("Accuracy is : " + str(counter / 200))
 end_time = datetime.now()
 print('Duration: {}'.format(end_time - start_time))

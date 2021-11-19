@@ -62,14 +62,14 @@ random.shuffle(train_set)
 random.shuffle(test_set)
 minimize_train_set = train_set[:1962]
 
-
+# define sigmoid function to calculate sigmoid
 def sigmoid(x):
     ans = 1 / (1 + np.exp(-x))
     return ans
 
 
 np.random.seed(1)
-epoch = 20
+epoch = 10
 batch_size = 10
 batch_num = int(1962 / 10)
 learning_rate = 0.004
@@ -78,7 +78,7 @@ n_x = 102
 n_h_1 = 150
 n_h_2 = 60
 n_y = 4
-# intialize the layers here
+
 W1 = np.random.randn(n_h_1, n_x)
 b1 = np.zeros((n_h_1, 1))
 W2 = np.random.randn(n_h_2, n_h_1)
@@ -112,31 +112,24 @@ for epoch_count in range(epoch):
             for s in range(len(S3)):
                 temp_cost += pow(S3[s][0] - reshape_train_lables[s][0], 2)
             total_cost += temp_cost
-
+            # weight
             grad_W3 += (2 * (S3 - reshape_train_lables) * S3 * (1 - S3)) @ np.transpose(S2)
-
             # bias
             grad_b3 += 2 * (S3 - reshape_train_lables) * S3 * (1 - S3)
-
-            # ---- 3rd layer
+            # third layer
             # activation
             delta_3 = np.zeros((n_h_2, 1))
             delta_3 += np.transpose(W3) @ (2 * (S3 - reshape_train_lables) * (S3 * (1 - S3)))
-
             # weight
             grad_W2 += (S2 * (1 - S2) * delta_3) @ np.transpose(S1)
-
             # bias
             grad_b2 += delta_3 * S2 * (1 - S2)
-
-            # ---- 2nd layer
+            # second layer
             # activation
             delta_2 = np.zeros((n_h_1, 1))
             delta_2 += np.transpose(W2) @ (delta_3 * S2 * (1 - S2))
-
             # weight
             grad_W1 += (delta_2 * S1 * (1 - S1)) @ np.transpose(reshape_train)
-
             # bias
             grad_b1 += delta_2 * S1 * (1 - S1)
 

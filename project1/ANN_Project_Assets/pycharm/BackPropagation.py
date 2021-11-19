@@ -60,7 +60,8 @@ for i in range(len(test_set_features)):
 # shuffle
 random.shuffle(train_set)
 random.shuffle(test_set)
-minimize_train_set=train_set[:200]
+# train with  200 data
+minimize_train_set = train_set[:200]
 
 
 def sigmoid(x):
@@ -68,43 +69,53 @@ def sigmoid(x):
     return ans
 
 
-def result(x, w, b):
-    return (np.dot(w, x)) + b
-
+# create random seed
 np.random.seed(1)
+# defime epoch size
 epoch = 5
+# batch size
 batch_size = 10
+# each batch data number
 batch_num = int(200 / 10)
+# learning rate for calculating new W B
 learning_rate = 0.3
 np.random.seed(1)
+# size of layer first to last
 n_x = 102
 n_h_1 = 150
 n_h_2 = 60
 n_y = 4
-# intialize the layers here
+# # make weights and bias for all layers
 W1 = np.random.randn(n_h_1, n_x)
 b1 = np.zeros((n_h_1, 1))
 W2 = np.random.randn(n_h_2, n_h_1)
 b2 = np.zeros((n_h_2, 1))
 W3 = np.random.randn(n_y, n_h_2)
 b3 = np.zeros((n_y, 1))
+# initialize array for cost of each epoch
 costs = []
+# do train for number of epochs
 for epoch_count in range(epoch):
     # shuffle
+    # cost off each epoch
     total_cost = 0
     print("epoch_count  " + str(epoch_count + 1))
+    # shuffle train set
     random.shuffle(train_set)
     minimize_train_set = train_set[:200]
     for batch_count in range(batch_size):
         print("batch count " + str(batch_count + 1))
+        # initialize gradians for weights and bias off all layers
         grad_W1 = np.zeros((n_h_1, n_x))
         grad_W2 = np.zeros((n_h_2, n_h_1))
         grad_W3 = np.zeros((n_y, n_h_2))
         grad_b1 = np.zeros((n_h_1, 1))
         grad_b2 = np.zeros((n_h_2, 1))
         grad_b3 = np.zeros((n_y, 1))
+
         for i in range(batch_num):
             print("mini batch num is " + str(i + 1))
+            # just feed forward
             reshape_train = minimize_train_set[batch_count * 20 + i][0]
             reshape_train_lables = minimize_train_set[batch_count * 20 + i][1]
             S0 = reshape_train
@@ -112,9 +123,12 @@ for epoch_count in range(epoch):
             S2 = sigmoid(W2 @ S1 + b2)
             S3 = sigmoid(W3 @ S2 + b3)
             temp_cost = 0
+            # calculate cost of each data
             for s in range(len(S3)):
                 temp_cost += pow(S3[s][0] - reshape_train_lables[s][0], 2)
             total_cost += temp_cost
+            # calculate all gradians
+            # wight for W3
             for j in range(grad_W3.shape[0]):
                 for k in range(grad_W3.shape[1]):
                     grad_W3[j, k] += 2 * (S3[j, 0] - reshape_train_lables[j, 0]) * S3[j, 0] * (1 - S3[j, 0]) * S2[k, 0]
@@ -123,8 +137,8 @@ for epoch_count in range(epoch):
             for j in range(grad_b3.shape[0]):
                 grad_b3[j, 0] += 2 * (S3[j, 0] - reshape_train_lables[j, 0]) * S3[j, 0] * (1 - S3[j, 0])
 
-            # ---- 3rd layer
-            # activation
+            #  third layer
+
             delta_3 = np.zeros((n_h_2, 1))
             for k in range(n_h_2):
                 for j in range(n_y):
@@ -139,7 +153,7 @@ for epoch_count in range(epoch):
             for k in range(grad_b2.shape[0]):
                 grad_b2[k, 0] += delta_3[k, 0] * S2[k, 0] * (1 - S2[k, 0])
 
-            # ---- 2nd layer
+            # second  layer
             # activation
             delta_2 = np.zeros((n_h_1, 1))
             for m in range(n_h_1):
@@ -153,7 +167,7 @@ for epoch_count in range(epoch):
             # bias
             for m in range(grad_b1.shape[0]):
                 grad_b1[m, 0] += delta_2[m, 0] * S1[m, 0] * (1 - S1[m, 0])
-
+        # edit weights with gradians
         W3 = W3 - (learning_rate * (grad_W3 / batch_size))
         W2 = W2 - (learning_rate * (grad_W2 / batch_size))
         W1 = W1 - (learning_rate * (grad_W1 / batch_size))
@@ -161,25 +175,28 @@ for epoch_count in range(epoch):
         b2 = b2 - (learning_rate * (grad_b2 / batch_size))
         b1 = b1 - (learning_rate * (grad_b1 / batch_size))
 
-
+    # calculate costs
     costs.append(total_cost / 200)
     print("cost of this epoch is " + str(total_cost))
 print("average cost : " + str(sum(costs)))
+# plot costs per epoch diagram
 epoch_list = [c + 1 for c in range(epoch)]
 plt.plot(epoch_list, costs)
 plt.show()
-counter=0
+counter = 0
+# feed forward for calculate accuracy of train
 for i in range(len(minimize_train_set)):
-      reshape_train=minimize_train_set[i][0]
-      reshape_train_label=minimize_train_set[i][1]
-      S0 = reshape_train
-      S1 = sigmoid(W1 @ S0 + b1)
-      S2 = sigmoid(W2 @ S1 + b2)
-      S3 = sigmoid(W3 @ S2 + b3)
-      index = np.where(S3 == np.amax(S3))
-      max_index = np.where(reshape_train_label == np.amax(reshape_train_label))
-      if index == max_index:
-          counter += 1
-print("Accuracy is : " +str(counter / 200))
+    reshape_train = minimize_train_set[i][0]
+    reshape_train_label = minimize_train_set[i][1]
+    S0 = reshape_train
+    S1 = sigmoid(W1 @ S0 + b1)
+    S2 = sigmoid(W2 @ S1 + b2)
+    S3 = sigmoid(W3 @ S2 + b3)
+    index = np.where(S3 == np.amax(S3))
+    max_index = np.where(reshape_train_label == np.amax(reshape_train_label))
+    if index == max_index:
+        counter += 1
+# show resluts
+print("Accuracy is : " + str(counter / 200))
 end_time = datetime.now()
 print('Duration: {}'.format(end_time - start_time))

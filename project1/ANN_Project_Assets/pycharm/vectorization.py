@@ -63,26 +63,28 @@ random.shuffle(test_set)
 minimize_train_set = train_set[:200]
 
 
+# sigmoid activation
 def sigmoid(x):
     ans = 1 / (1 + np.exp(-x))
     return ans
 
 
-def result(x, w, b):
-    return np.dot(w, x) + b
-
-
+# create randoms
 np.random.seed(1)
+# epoch size
 epoch = 10
+# batch size
 batch_size = 10
+# mini batch data num
 batch_num = int(200 / 10)
 learning_rate = 0.15
 np.random.seed(1)
+# layers
 n_x = 102
 n_h_1 = 150
 n_h_2 = 60
 n_y = 4
-# intialize the layers here
+# initilize wights and bias for layers
 W1 = np.random.randn(n_h_1, n_x)
 b1 = np.zeros((n_h_1, 1))
 W2 = np.random.randn(n_h_2, n_h_1)
@@ -99,6 +101,7 @@ for epoch_count in range(epoch):
     minimize_train_set = train_set[:200]
     for batch_count in range(batch_size):
         print("batch count " + str(batch_count + 1))
+        # initialize gradians for weights and bias off all layers
         grad_W1 = np.zeros((n_h_1, n_x))
         grad_W2 = np.zeros((n_h_2, n_h_1))
         grad_W3 = np.zeros((n_y, n_h_2))
@@ -107,40 +110,35 @@ for epoch_count in range(epoch):
         grad_b3 = np.zeros((n_y, 1))
         for i in range(batch_num):
             print("mini batch num is " + str(i + 1))
+            # just feed forward
             reshape_train = minimize_train_set[batch_count * 20 + i][0]
             reshape_train_lables = minimize_train_set[batch_count * 20 + i][1]
             S1 = sigmoid(W1 @ reshape_train + b1)
             S2 = sigmoid(W2 @ S1 + b2)
             S3 = sigmoid(W3 @ S2 + b3)
             temp_cost = 0
+            # calculate cost
             for s in range(len(S3)):
                 temp_cost += pow(S3[s][0] - reshape_train_lables[s][0], 2)
             total_cost += temp_cost
-
+            # weight
             grad_W3 += (2 * (S3 - reshape_train_lables) * S3 * (1 - S3)) @ np.transpose(S2)
-
             # bias
             grad_b3 += 2 * (S3 - reshape_train_lables) * S3 * (1 - S3)
-
-            # ---- 3rd layer
+            # third layer
             # activation
             delta_3 = np.zeros((n_h_2, 1))
             delta_3 += np.transpose(W3) @ (2 * (S3 - reshape_train_lables) * (S3 * (1 - S3)))
-
             # weight
             grad_W2 += (S2 * (1 - S2) * delta_3) @ np.transpose(S1)
-
             # bias
             grad_b2 += delta_3 * S2 * (1 - S2)
-
-            # ---- 2nd layer
+            # second layer
             # activation
             delta_2 = np.zeros((n_h_1, 1))
             delta_2 += np.transpose(W2) @ (delta_3 * S2 * (1 - S2))
-
             # weight
             grad_W1 += (delta_2 * S1 * (1 - S1)) @ np.transpose(reshape_train)
-
             # bias
             grad_b1 += delta_2 * S1 * (1 - S1)
 
@@ -151,6 +149,7 @@ for epoch_count in range(epoch):
         b2 = b2 - (learning_rate * (grad_b2 / batch_size))
         b1 = b1 - (learning_rate * (grad_b1 / batch_size))
     cost = 0
+    # caluclate cost for batch after train
     for train_data in train_set[:100]:
         S0 = train_data[0]
         S1 = sigmoid(W1 @ S0 + b1)
@@ -164,12 +163,13 @@ for epoch_count in range(epoch):
 print("average cost epochs : " + str(sum(costs1)))
 print("average cost all of epoch : " + str(sum(costs2)))
 epoch_list = [c + 1 for c in range(epoch)]
-
+# show costs
 plt.plot(epoch_list, costs1)
 plt.plot(epoch_list, costs2)
 
 plt.show()
 counter = 0
+# calculate accuracy
 for i in range(len(minimize_train_set)):
     reshape_train = minimize_train_set[i][0]
     reshape_train_label = minimize_train_set[i][1]
