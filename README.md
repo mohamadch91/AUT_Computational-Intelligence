@@ -1,0 +1,1 @@
+This project implement fuzzy logic in python
