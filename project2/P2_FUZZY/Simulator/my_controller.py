@@ -28,7 +28,7 @@ class FuzzyController:
 
     def decide(self, world):
         output = self._make_output()
-        outpu['force']=self.system.defuzzyfication(self._make_input(world), output)
+        output['force'] = self.system.defuzzyfication(self._make_input(world))
         return output['force']
 class fuzzy_system:
         def __int__(self):
@@ -40,11 +40,13 @@ class fuzzy_system:
         #calculate distance between line and point
         #calculate line slope
         def equation_of_line(self,x1,y1,x2,y2,x):
-            m = (y2-y1)/(x2-x1)
-            b = y1 - m*x1
-            y = m*x + b
-            if(x1==x2):
-                y=(float)(max(y1,y2))
+            if (x1 == x2):
+                y = (float)(max(y1, y2))
+            else :
+                m = (y2-y1)/(x2-x1)
+                b = y1 - m*x1
+                y = m*x + b
+
             return y    
         #define function to calculate rules from complex.fcl
         #pa means angle of pendulum
@@ -417,7 +419,7 @@ class fuzzy_system:
             return y
         #calculate force_right_fast
         def force_right_fast(self,x):
-            (x1,y1),(x2,y2),(x3,y3)=(60, 0) (80, 1) (100, 0)
+            (x1,y1),(x2,y2),(x3,y3)=(60, 0), (80, 1) ,(100, 0)
 
             #if x is in the range of x1 and x2
             if(x1<x<=x2):
@@ -438,24 +440,24 @@ class fuzzy_system:
         #calculate member shib for force 
         def mem_force(self,pa,pv,cv):
             
-            stop=max((max(min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_up_right(pa),self.pv_ccw_slow(pv)),min(self.pa_up_left(pa),self.pv_cw_slow(pv)))),min(self.pa_down_more_right(pa),self.pv_cw_slow(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_slow(pv)),min(self.pa_down(pa),self.pv_ccw_fast(pv)),min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_down(pa),self.pv_cw_fast(pv)),min(self.pa_down_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_ccw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_fast(pv)),min(self.cv_stop(cv),self.pv_stop(pv)))
+            stop=max((max(min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_up_right(pa),self.pv_ccw_slow(pv)),min(self.pa_up_left(pa),self.pv_cw_slow(pv)))),min(self.pa_down_more_right(pa),self.pv_cw_slow(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_slow(pv)),min(self.pa_down(pa),self.pv_ccw_fast(pv)),min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_down(pa),self.pv_cw_fast(pv)),min(self.pa_down_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_ccw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_fast(pv)))
 
             right_fast=max(min(self.pa_up_more_right(pa),self.pv_ccw_slow(pv)),min(self.pa_up_more_right(pa),self.pv_cw_slow(pv)),min(self.pa_up_more_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_ccw_slow(pv)),min(
                 self.pa_down_right(pa),self.pv_ccw_slow(pv)),min(self.pa_down_right(pa),self.pv_cw_slow(pv)),
-                min(self.pa_up_right(pa),self.pv_cw_slow(pv)),min(self.pa_up_right(pa),self.pv_stop(pv)),min(self.pa_up_right(pa),self.pv_cw_fast(pv)),min(self.pa_up_left(pa),self.pv_cw_fast(pv)),min(self.pa_down(pa),self.pv_stop(pv)),min(self.pa_up(pa),self.pv_cw_fast(pv)),min(self.cv_stop(cv),self.pa_up(pa),self.pv_cw_fast(pv)),min(self.cv_right_fast(cv),self.pv_cw_slow(pv)),min(self.cv_left_slow(cv),self.pv_ccw_fast(pv)))
+                min(self.pa_up_right(pa),self.pv_cw_slow(pv)),min(self.pa_up_right(pa),self.pv_stop(pv)),min(self.pa_up_right(pa),self.pv_cw_fast(pv)),min(self.pa_up_left(pa),self.pv_cw_fast(pv)),min(self.pa_down(pa),self.pv_stop(pv)),min(self.pa_up(pa),self.pv_cw_fast(pv)))
             left_fast=max(min(self.pa_up_more_left(pa),self.pv_ccw_slow(pv)),min(self.pa_up_more_left(pa),self.pv_cw_slow(pv)),min(self.pa_up_more_left(pa),self.pv_ccw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_cw_slow(pv)),min(
                 self.pa_down_left(pa),self.pv_cw_slow(pv)),min(self.pa_down_left(pa),self.pv_ccw_slow(pv)),
-                min(self.pa_up_left(pa),self.pv_ccw_slow(pv)),min(self.pa_up_left(pa),self.pv_stop(pv)),min(self.pa_up_left(pa),self.pv_ccw_fast(pv)),min(self.pa_up_right(pa),self.pv_ccw_fast(pv)),min(self.pa_up(pa),self.pv_stop(pv)),min(self.cv_left_fast(cv),self.pv_ccw_slow(pv)),min(self.cv_stop(cv),self.pa_up(pa),self.pv_ccw_fast(pv)))   
+                min(self.pa_up_left(pa),self.pv_ccw_slow(pv)),min(self.pa_up_left(pa),self.pv_stop(pv)),min(self.pa_up_left(pa),self.pv_ccw_fast(pv)),min(self.pa_up_right(pa),self.pv_ccw_fast(pv)),min(self.pa_up(pa),self.pv_stop(pv)))   
             left_slow=max(min(self.pa_up_more_right(pa),self.pv_ccw_fast(pv)),min(self.pa_down_left(pa),self.pv_ccw_fast(pv)),min(
                 self.pa_up_left(pa),self.pv_cw_slow(pv)
-            ),min(self.pa_up(pa),self.pv_ccw_slow(pv)),min(self.cv_right_slow(cv),self.pv_cw_fast(pv)),min(self.cv_left_slow(cv),self.pv_ccw_slow(pv)),min(self.cv_left_fast(cv),self.pv_ccw_fast(pv)))
+            ),min(self.pa_up(pa),self.pv_ccw_slow(pv)))
             right_slow=max(min(self.pa_up_more_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_right(pa),self.pv_cw_fast(pv)),min(
                 self.pa_up_right(pa),self.pv_ccw_slow(pv)
-            ),min(self.pa_up(pa),self.pv_cw_slow(pv)),min(self.cv_right_fast(cv),self.pv_cw_fast(pv)),min(self.cv_right_slow(cv),self.pv_cw_slow(pv)),min(self.cv_left_slow(cv),self.pv_ccw_fast(pv)))
+            ),min(self.pa_up(pa),self.pv_cw_slow(pv)))
             return stop,right_fast,left_fast,left_slow,right_slow
         #defuzzyfication
-        def defuzzyfication(self,input,output):
-            right_fast,left_fast,left_slow,right_slow,stop=input['right_fast'],input['left_fast'],input['left_slow'],input['right_slow'],input['stop']
+        def defuzzyfication(self,input):
+            right_fast,left_fast,left_slow,right_slow,stop=self.mem_force(input['pa'],input['pv'],input['cv'])
             #we calculate integral of fuzzy set and then we get the value of the defuzzyfication of force
             #we use the trapezoidal rule
             #it means sum of points is integral of fuzzy set
@@ -469,8 +471,8 @@ class fuzzy_system:
                 force_left_slow=min(left_slow,self.force_left_slow(points[i]))
                 force_Stop=min(stop,self.force_stop(points[i]))
                 max_force=max(force_right_fast,force_right_slow,force_left_fast,force_left_slow,force_Stop)
-                inetgral+=max_force*(points[i+1]-points[i])
-                sums+=max_force*points[i]*(points[i+1]-points[i])
+                inetgral+=max_force*(points[1]-points[0])
+                sums+=max_force*points[i]*(points[1]-points[0])
             #check if the integral is zero
             if inetgral==0:
                 return 0
