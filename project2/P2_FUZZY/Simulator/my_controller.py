@@ -468,6 +468,11 @@ class fuzzy_system:
             left_slow=max(min(self.pa_up_more_right(pa),self.pv_ccw_fast(pv)),min(self.pa_down_left(pa),self.pv_ccw_fast(pv)),min(
                 self.pa_up_left(pa),self.pv_cw_slow(pv)
             ),min(self.pa_up(pa),self.pv_ccw_slow(pv)),min(self.cv_right_slow(cv),self.pv_cw_fast(pv)),min(self.cv_left_slow(cv),self.pv_ccw_slow(pv)),min(self.cv_left_fast(cv),self.pv_ccw_fast(pv)))
+            right_slow=max(min(self.pa_up_more_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_right(pa),self.pv_cw_fast(pv)),min(
+                self.pa_up_right(pa),self.pv_ccw_slow(pv)
+            ),min(self.pa_up(pa),self.pv_cw_slow(pv)),min(self.cv_right_fast(cv),self.pv_cw_fast(pv)),min(self.cv_right_slow(cv),self.pv_cw_slow(pv)),min(self.cv_left_slow(cv),self.pv_ccw_fast(pv)))
+            return stop,right_fast,left_fast,left_slow,right_slow
+            
             
             
             
