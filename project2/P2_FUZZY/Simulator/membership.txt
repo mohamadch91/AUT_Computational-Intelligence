@@ -1,29 +1,21 @@
 
 
 
-RULE 5: IF (pa IS up_more_right) AND (pv IS ccw_fast) THEN force IS left_slow;
 
 RULE 7: IF (pa IS up_more_left) AND (pv IS cw_fast) THEN force IS right_slow;
 
 
 RULE 22: IF (pa IS down_right) AND (pv IS cw_fast) THEN force IS right_slow;
 
-RULE 24: IF (pa IS down_left) AND (pv IS ccw_fast) THEN force IS left_slow;
 
 
 RULE 25: IF (pa IS up_right) AND (pv IS ccw_slow) THEN force IS right_slow;
 
-RULE 28: IF (pa IS up_left) AND (pv IS cw_slow) THEN force IS left_slow;
-
-
-RULE 38: IF (pa IS up) AND (pv IS ccw_slow) THEN force IS left_slow;
 RULE 40: IF (pa IS up) AND (pv IS cw_slow) THEN force IS right_slow;
 //add my rules
 RULE 47: IF (cv IS right_fast) AND (pv IS cw_fast) THEN force IS right_slow;
-RULE 49: IF (cv IS left_fast) AND (pv IS ccw_fast) THEN force IS left_slow;
 RULE 50: IF (cv IS right_slow) AND (pv IS cw_slow) THEN force IS right_slow;
-RULE 51: IF (cv IS right_slow) AND (pv IS cw_fast) THEN force IS left_slow;
-RULE 52: IF (cv IS left_slow) AND (pv IS ccw_slow) THEN force IS left_slow;
+
 RULE 53: IF (cv IS left_slow) AND (pv IS ccw_fast) THEN force IS right_slow;
 
 
@@ -125,7 +117,22 @@ RULE 45: IF (cv IS stop) AND (pa IS up) AND (pv IS ccw_fast) THEN force IS left_
 complete rules for left_fast
 /////////////////////////////////////////////////////////////////////
 start rules for left_slow
-
+RULE 5: IF (pa IS up_more_right) AND (pv IS ccw_fast) THEN force IS left_slow;
+//////////////
+RULE 24: IF (pa IS down_left) AND (pv IS ccw_fast) THEN force IS left_slow;
+//////////////
+RULE 28: IF (pa IS up_left) AND (pv IS cw_slow) THEN force IS left_slow;
+/////////////
+RULE 38: IF (pa IS up) AND (pv IS ccw_slow) THEN force IS left_slow;
+///////////
+RULE 51: IF (cv IS right_slow) AND (pv IS cw_fast) THEN force IS left_slow;
+/////////////
+RULE 52: IF (cv IS left_slow) AND (pv IS ccw_slow) THEN force IS left_slow;
+///////////////////////
+RULE 49: IF (cv IS left_fast) AND (pv IS ccw_fast) THEN force IS left_slow;
+/////////////
+complete left slow
+/////////////////////////////////////////////////////////////////////////////////////////
 
 
 
