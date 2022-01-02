@@ -1,20 +1,9 @@
 
-RULE 3: IF (pa IS up_more_left) AND (pv IS cw_slow) THEN force IS left_fast;
-RULE 4: IF (pa IS up_more_left) AND (pv IS ccw_slow) THEN force IS left_fast;
+
 
 RULE 5: IF (pa IS up_more_right) AND (pv IS ccw_fast) THEN force IS left_slow;
 
 RULE 7: IF (pa IS up_more_left) AND (pv IS cw_fast) THEN force IS right_slow;
-RULE 8: IF (pa IS up_more_left) AND (pv IS ccw_fast) THEN force IS left_fast;
-
-
-
-RULE 11: IF (pa IS down_more_left) AND (pv IS cw_slow) THEN force IS left_fast;
-
-
-
-RULE 19: IF (pa IS down_left) AND (pv IS cw_slow) THEN force IS left_fast;
-RULE 20: IF (pa IS down_left) AND (pv IS ccw_slow) THEN force IS left_fast;
 
 
 RULE 22: IF (pa IS down_right) AND (pv IS cw_fast) THEN force IS right_slow;
@@ -25,23 +14,12 @@ RULE 24: IF (pa IS down_left) AND (pv IS ccw_fast) THEN force IS left_slow;
 RULE 25: IF (pa IS up_right) AND (pv IS ccw_slow) THEN force IS right_slow;
 
 RULE 28: IF (pa IS up_left) AND (pv IS cw_slow) THEN force IS left_slow;
-RULE 29: IF (pa IS up_left) AND (pv IS ccw_slow) THEN force IS left_fast;
-RULE 30: IF (pa IS up_left) AND (pv IS stop) THEN force IS left_fast;
-
-
-RULE 31: IF (pa IS up_right) AND (pv IS ccw_fast) THEN force IS left_fast;
-
-RULE 34: IF (pa IS up_left) AND (pv IS ccw_fast) THEN force IS left_fast;
-
 
 
 RULE 38: IF (pa IS up) AND (pv IS ccw_slow) THEN force IS left_slow;
-RULE 39: IF (pa IS up) AND (pv IS ccw_fast) THEN force IS left_fast;
 RULE 40: IF (pa IS up) AND (pv IS cw_slow) THEN force IS right_slow;
 //add my rules
-RULE 45: IF (cv IS stop) AND (pa IS up) AND (pv IS ccw_fast) THEN force IS left_fast;
 RULE 47: IF (cv IS right_fast) AND (pv IS cw_fast) THEN force IS right_slow;
-RULE 48: IF (cv IS left_fast) AND (pv IS ccw_slow) THEN force IS left_fast;
 RULE 49: IF (cv IS left_fast) AND (pv IS ccw_fast) THEN force IS left_slow;
 RULE 50: IF (cv IS right_slow) AND (pv IS cw_slow) THEN force IS right_slow;
 RULE 51: IF (cv IS right_slow) AND (pv IS cw_fast) THEN force IS left_slow;
@@ -117,7 +95,39 @@ RULE 54: IF (cv IS left_slow) AND (pv IS ccw_fast) THEN force IS right_fast;
 ///////////
 complete right_fast rules
 /////////////////////////////////////////////////////////////////////////////////////////
-//////rules for left fast
+//////rules for left_fast
+RULE 3: IF (pa IS up_more_left) AND (pv IS cw_slow) THEN force IS left_fast;
+///////////
+RULE 4: IF (pa IS up_more_left) AND (pv IS ccw_slow) THEN force IS left_fast;
+////////////
+RULE 8: IF (pa IS up_more_left) AND (pv IS ccw_fast) THEN force IS left_fast;
+/////////////////
+RULE 11: IF (pa IS down_more_left) AND (pv IS cw_slow) THEN force IS left_fast;
+//////////////////
+RULE 19: IF (pa IS down_left) AND (pv IS cw_slow) THEN force IS left_fast;
+////////////
+RULE 20: IF (pa IS down_left) AND (pv IS ccw_slow) THEN force IS left_fast;
+///////////////
+RULE 29: IF (pa IS up_left) AND (pv IS ccw_slow) THEN force IS left_fast;
+///////////
+RULE 30: IF (pa IS up_left) AND (pv IS stop) THEN force IS left_fast;
+//////////////
+RULE 31: IF (pa IS up_right) AND (pv IS ccw_fast) THEN force IS left_fast;
+////////////////////////
+RULE 34: IF (pa IS up_left) AND (pv IS ccw_fast) THEN force IS left_fast;
+////////////////////////
+RULE 39: IF (pa IS up) AND (pv IS ccw_fast) THEN force IS left_fast;
+//////////////////////
+RULE 48: IF (cv IS left_fast) AND (pv IS ccw_slow) THEN force IS left_fast;
+/////////////////
+RULE 45: IF (cv IS stop) AND (pa IS up) AND (pv IS ccw_fast) THEN force IS left_fast;
+//////////////////////
+complete rules for left_fast
+/////////////////////////////////////////////////////////////////////
+start rules for left_slow
+
+
+
 
 
 
