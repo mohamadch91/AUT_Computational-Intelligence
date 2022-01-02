@@ -60,15 +60,27 @@ IF
     OR (pa IS up_right AND pv IS ccw_slow)
     OR (pa IS up_left AND pv IS cw_slow)
 THEN force IS stop;
+/////////////////////////////////////////////////////////////////////
 RULE 10: IF (pa IS down_more_right) AND (pv IS cw_slow) THEN force IS stop;
+///////////
 RULE 12: IF (pa IS down_more_left) AND (pv IS ccw_slow) THEN force IS stop;
+////////////////////////
 RULE 37: IF (pa IS down) AND (pv IS ccw_fast) THEN force IS stop;
+/////////////////////////////////////////////////////////////////////
 RULE 42: IF (pa IS up) AND (pv IS stop) THEN force IS stop;
+//
 RULE 36: IF (pa IS down) AND (pv IS cw_fast) THEN force IS stop;
+/////////////////////////////////////////////////////////////////////
+
 RULE 23: IF (pa IS down_left) AND (pv IS cw_fast) THEN force IS stop;
+//
 RULE 21: IF (pa IS down_right) AND (pv IS ccw_fast) THEN force IS stop;
+//////////////
 RULE 13: IF (pa IS down_more_right) AND (pv IS ccw_fast) THEN force IS stop;
+///
 RULE 14: IF (pa IS down_more_right) AND (pv IS cw_fast) THEN force IS stop;
+//////////////
 RULE 15: IF (pa IS down_more_left) AND (pv IS cw_fast) THEN force IS stop;
 RULE 16: IF (pa IS down_more_left) AND (pv IS ccw_fast) THEN force IS stop;
 we need to find maximum of all this rules
+/////////completre rules for stop

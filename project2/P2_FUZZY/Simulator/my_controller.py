@@ -214,7 +214,7 @@ class fuzzy_system:
             else:
                 return 0
         #caculate ccw slow
-        def pa_ccw_slow(self,x):
+        def pv_ccw_slow(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(0, 0), (100, 1) ,(200, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -226,7 +226,7 @@ class fuzzy_system:
             else:
                 return 0        
         #calculate ccw fast
-        def pa_ccw_fast(self,x):
+        def pv_ccw_fast(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(100, 0), (200, 1), (200, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -455,7 +455,9 @@ class fuzzy_system:
         #calculate member shib for force 
         def mem_force(self,pa,pv,cp,cv):
             mem=dict()
-            mem['stop']=max((max(min(self.pa_up(pa),),min(),min())),)
+            mem['stop']=max((max(min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_up_right(pa),self.pv_ccw_slow(pv)),min(self.pa_up_left(pa),self.pv_cw_slow(pv)))),min(self.pa_down_more_right(pa),self.pv_cw_slow(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_slow(pv)),min(self.pa_down(pa),self.pv_ccw_fast(pv)),min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_down(pa),self.pv_cw_fast(pv)),min(self.pa_down_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_ccw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_fast(pv)))
+            
+
             
             
             
