@@ -3,7 +3,7 @@
 # python imports
 from math import degrees
 
-from numpy import np
+import numpy as np
 
 class FuzzyController:
 
@@ -28,7 +28,7 @@ class FuzzyController:
 
     def decide(self, world):
         output = self._make_output()
-        self.system.calculate(self._make_input(world), output)
+        self.system.defuzzyfication(self._make_input(world), output)
         return output['force']
 class fuzzy_system:
         def __int__(self):
@@ -363,7 +363,7 @@ class fuzzy_system:
                 return 0
         #####################################################################################################
         #caculate forcee data
-        def force_left_fast(self,x,lim):
+        def force_left_fast(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(-100, 0), (-80, 1) ,(-60, 0)
 
             #if x is in the range of x1 and x2
@@ -374,13 +374,9 @@ class fuzzy_system:
                 y= self.equation_of_line(x3,y3,x2,y2,x)
             else:
                 y=0         
-            #if limit is not reached
-            if(y<lim):
-                return y  
-            #or return lim
-            return  lim        
+            return y      
         #calculate force_left_slow
-        def force_left_slow(self,x,lim):
+        def force_left_slow(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(-80, 0) ,(-60, 1), (0, 0)
 
             #if x is in the range of x1 and x2
@@ -391,13 +387,10 @@ class fuzzy_system:
                 y= self.equation_of_line(x3,y3,x2,y2,x)
             else:
                 y=0         
-            #if limit is not reached
-            if(y<lim):
-                return  y
-            #or return lim
-            return lim
+            
+            return y
         #calculate force_stop
-        def force_stop(self,x,lim):
+        def force_stop(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(-60, 0) ,(0, 1) ,(60, 0)
 
             #if x is in the range of x1 and x2
@@ -408,13 +401,9 @@ class fuzzy_system:
                 y= self.equation_of_line(x3,y3,x2,y2,x)
             else:
                 y=0         
-            #if limit is not reached
-            if(y<lim):
-                return  y
-            #or return lim
-            return lim
+            return y
         #calculate force_right_slow
-        def force_right_slow(self,x,lim):
+        def force_right_slow(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(0, 0), (60, 1), (80, 0)
 
             #if x is in the range of x1 and x2
@@ -425,13 +414,9 @@ class fuzzy_system:
                 y= self.equation_of_line(x3,y3,x2,y2,x)
             else:
                 y=0         
-            #if limit is not reached
-            if(y<lim):
-                return  y
-            #or return lim
-            return lim
+            return y
         #calculate force_right_fast
-        def force_right_fast(self,x,lim):
+        def force_right_fast(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(60, 0) (80, 1) (100, 0)
 
             #if x is in the range of x1 and x2
@@ -442,11 +427,7 @@ class fuzzy_system:
                 y= self.equation_of_line(x3,y3,x2,y2,x)
             else:
                 y=0         
-            #if limit is not reached
-            if(y<lim):
-                return  y
-            #or return lim
-            return lim
+            return y
         
         ##########################################################################
         #inference
@@ -455,7 +436,7 @@ class fuzzy_system:
         #find same rules in  memeber.txt file
         #caculate rules for all force terms
         #calculate member shib for force 
-        def mem_force(self,pa,pv,cp,cv):
+        def mem_force(self,pa,pv,cv):
             
             stop=max((max(min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_up_right(pa),self.pv_ccw_slow(pv)),min(self.pa_up_left(pa),self.pv_cw_slow(pv)))),min(self.pa_down_more_right(pa),self.pv_cw_slow(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_slow(pv)),min(self.pa_down(pa),self.pv_ccw_fast(pv)),min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_down(pa),self.pv_cw_fast(pv)),min(self.pa_down_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_ccw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_fast(pv)),min(self.cv_stop(cv),self.pv_stop(pv)))
 
@@ -472,7 +453,35 @@ class fuzzy_system:
                 self.pa_up_right(pa),self.pv_ccw_slow(pv)
             ),min(self.pa_up(pa),self.pv_cw_slow(pv)),min(self.cv_right_fast(cv),self.pv_cw_fast(pv)),min(self.cv_right_slow(cv),self.pv_cw_slow(pv)),min(self.cv_left_slow(cv),self.pv_ccw_fast(pv)))
             return stop,right_fast,left_fast,left_slow,right_slow
+        #defuzzyfication
+        def defuzzyfication(self,input,output):
+            right_fast,left_fast,left_slow,right_slow,stop=input['right_fast'],input['left_fast'],input['left_slow'],input['right_slow'],input['stop']
+            #we calculate integral of fuzzy set and then we get the value of the defuzzyfication of force
+            #we use the trapezoidal rule
+            #it means sum of points is integral of fuzzy set
+            points=np.linspace(-100,100,1000)
+            inetgral =0.0
+            sums=0.0
+            for i in range(len(points)):
+                force_right_fast=min(right_fast,self.force_right_fast(points[i]))
+                force_right_slow=min(right_slow,self.force_right_slow(points[i]))
+                force_left_fast=min(left_fast,self.force_left_fast(points[i]))
+                force_left_slow=min(left_slow,self.force_left_slow(points[i]))
+                force_Stop=min(stop,self.force_stop(points[i]))
+                max_force=max(force_right_fast,force_right_slow,force_left_fast,force_left_slow,force_Stop)
+                inetgral+=max_force*(points[i+1]-points[i])
+                sums+=max_force*points[i]*(points[i+1]-points[i])
+            #check if the integral is zero
+            if inetgral==0:
+                return 0
+            #if not we calculate the defuzzyfication
+            else:
+                return sums/inetgral    
             
+
+
+            
+
             
             
             
