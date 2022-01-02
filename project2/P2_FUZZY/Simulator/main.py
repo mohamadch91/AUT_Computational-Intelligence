@@ -4,7 +4,7 @@
 # project imports
 from conf import ConfigReader
 from world import World
-from controller import FuzzyController
+from my_controller import FuzzyController
 from manager import Manager
 
 

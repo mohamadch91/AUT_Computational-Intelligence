@@ -28,7 +28,7 @@ class FuzzyController:
 
     def decide(self, world):
         output = self._make_output()
-        self.system.defuzzyfication(self._make_input(world), output)
+        outpu['force']=self.system.defuzzyfication(self._make_input(world), output)
         return output['force']
 class fuzzy_system:
         def __int__(self):
