@@ -33,6 +33,9 @@ class FuzzyController:
 class fuzzy_system:
         def __int__(self):
             pass
+        ##########################################################################
+        #fuzzyfication
+        ##########################################################################
         #calculate equation of line
         #calculate distance between line and point
         #calculate line slope
@@ -443,10 +446,16 @@ class fuzzy_system:
                 return  y
             #or return lim
             return lim
-        #####################################################################################################
+        
+        ##########################################################################
         #inference
+        ##########################################################################
+        #define dictionary for member ship
+        #find same rules in same memeber.txt file
         #calculate member shib for force 
         def mem_force(pa,pv,cp,cv):
-
+            mem=dict()
+            
+            
             
                 
