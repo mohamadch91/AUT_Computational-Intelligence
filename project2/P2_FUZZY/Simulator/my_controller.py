@@ -358,5 +358,95 @@ class fuzzy_system:
             else:
                 return 0
         #####################################################################################################
-        #caculate fore data
-        
+        #caculate forcee data
+        def force_left_fast(x,lim):
+            (x1,y1),(x2,y2),(x3,y3)=(-100, 0), (-80, 1) ,(-60, 0)
+
+            #if x is in the range of x1 and x2
+            if(x1<x<=x2):
+                y= self.equation_of_line(x1,y1,x2,y2,x)
+            #if x is in the range of x2 and x3
+            elif(x2<x<=x3):
+                y= self.equation_of_line(x3,y3,x2,y2,x)
+            else:
+                y=0         
+            #if limit is not reached
+            if(y<lim):
+                return y  
+            #or return lim
+            return  lim        
+        #calculate force_left_slow
+        def force_left_slow(x,lim):
+            (x1,y1),(x2,y2),(x3,y3)=(-80, 0) ,(-60, 1), (0, 0)
+
+            #if x is in the range of x1 and x2
+            if(x1<x<=x2):
+                y= self.equation_of_line(x1,y1,x2,y2,x)
+            #if x is in the range of x2 and x3
+            elif(x2<x<=x3):
+                y= self.equation_of_line(x3,y3,x2,y2,x)
+            else:
+                y=0         
+            #if limit is not reached
+            if(y<lim):
+                return  y
+            #or return lim
+            return lim
+        #calculate force_stop
+        def force_stop(x,lim):
+            (x1,y1),(x2,y2),(x3,y3)=(-60, 0) ,(0, 1) ,(60, 0)
+
+            #if x is in the range of x1 and x2
+            if(x1<x<=x2):
+                y= self.equation_of_line(x1,y1,x2,y2,x)
+            #if x is in the range of x2 and x3
+            elif(x2<x<=x3):
+                y= self.equation_of_line(x3,y3,x2,y2,x)
+            else:
+                y=0         
+            #if limit is not reached
+            if(y<lim):
+                return  y
+            #or return lim
+            return lim
+        #calculate force_right_slow
+        def force_right_slow(x,lim):
+            (x1,y1),(x2,y2),(x3,y3)=(0, 0), (60, 1), (80, 0)
+
+            #if x is in the range of x1 and x2
+            if(x1<x<=x2):
+                y= self.equation_of_line(x1,y1,x2,y2,x)
+            #if x is in the range of x2 and x3
+            elif(x2<x<=x3):
+                y= self.equation_of_line(x3,y3,x2,y2,x)
+            else:
+                y=0         
+            #if limit is not reached
+            if(y<lim):
+                return  y
+            #or return lim
+            return lim
+        #calculate force_right_fast
+        def force_right_fast(x,lim):
+            (x1,y1),(x2,y2),(x3,y3)=(60, 0) (80, 1) (100, 0)
+
+            #if x is in the range of x1 and x2
+            if(x1<x<=x2):
+                y= self.equation_of_line(x1,y1,x2,y2,x)
+            #if x is in the range of x2 and x3
+            elif(x2<x<=x3):
+                y= self.equation_of_line(x3,y3,x2,y2,x)
+            else:
+                y=0         
+            #if limit is not reached
+            if(y<lim):
+                return  y
+            #or return lim
+            return lim
+        #####################################################################################################
+        #inference
+        #calculate member shib for force 
+        def mem_force(pa,pv,cp,cv):
+
+            
+                
