@@ -237,67 +237,68 @@ class fuzzy_system:
             #or return zero
             else:
                 return 0
-    ##########################################################################################################            
+    ##########################################################################################################    
+    # comment this section if need cp rules uncomment the section below        
         #calculate datas for cp
-        def cp_left_far(self,x):
-            (x1,y1),(x2,y2),(x3,y3)=(-10,0),(-10, 1) (-5, 0);
-            #if x is in the range of x1 and x2
-            if(x<=x2):
-                return self.equation_of_line(x1,y1,x2,y2,x)
-            #if x is in the range of x2 and x3
-            elif(x2<=x ):
-                return self.equation_of_line(x3,y3,x2,y2,x)
-            #or return zero
-            else:
-                return 0
-        #calculate left_near
-        def cp_left_near(self,x):
-            (x1,y1),(x2,y2),(x3,y3)=(-10, 0), (-2.5, 1) ,(0, 0)
-            #if x is in the range of x1 and x2
-            if(x>=x1 and x<=x2):
-                return self.equation_of_line(x1,y1,x2,y2,x)
-            #if x is in the range of x2 and x3
-            elif(x>x2 and x<=x3):
-                return self.equation_of_line(x3,y3,x2,y2,x)
-            #or return zero
-            else:
-                return 0                  
-        #calculate stop
-        def cp_stop(self,x):
-            (x1,y1),(x2,y2),(x3,y3)=(-2.5, 0), (0, 1) ,(2.5, 0)
-            #if x is in the range of x1 and x2
-            if(x>=x1 and x<=x2):
-                return self.equation_of_line(x1,y1,x2,y2,x)
-            #if x is in the range of x2 and x3
-            elif(x>x2 and x<=x3):
-                return self.equation_of_line(x3,y3,x2,y2,x)
-            #or return zero
-            else:
-                return 0        
-        #calculate right_near
-        def cp_right_near(self,x):
-            (x1,y1),(x2,y2),(x3,y3)=(0, 0), (2.5, 1) ,(10, 0)
-            #if x is in the range of x1 and x2
-            if(x>=x1 and x<=x2):
-                return self.equation_of_line(x1,y1,x2,y2,x)
-            #if x is in the range of x2 and x3
-            elif(x>x2 and x<=x3):
-                return self.equation_of_line(x3,y3,x2,y2,x)
-            #or return zero
-            else:
-                return 0
-        #calculate right_far
-        def cp_right_far(self,x):
-            (x1,y1),(x2,y2),(x3,y3)=(5, 0) ,(10, 1),(10,0)
-            #if x is in the range of x1 and x2
-            if(x>=x1 and x<=x2):
-                return self.equation_of_line(x1,y1,x2,y2,x)
-            #if x is in the range of x2 and x3
-            elif(x2<=x):
-                return self.equation_of_line(x3,y3,x2,y2,x)
-            #or return zero
-            else:
-                return 0 
+        # def cp_left_far(self,x):
+        #     (x1,y1),(x2,y2),(x3,y3)=(-10,0),(-10, 1) (-5, 0);
+        #     #if x is in the range of x1 and x2
+        #     if(x<=x2):
+        #         return self.equation_of_line(x1,y1,x2,y2,x)
+        #     #if x is in the range of x2 and x3
+        #     elif(x2<=x ):
+        #         return self.equation_of_line(x3,y3,x2,y2,x)
+        #     #or return zero
+        #     else:
+        #         return 0
+        # #calculate left_near
+        # def cp_left_near(self,x):
+        #     (x1,y1),(x2,y2),(x3,y3)=(-10, 0), (-2.5, 1) ,(0, 0)
+        #     #if x is in the range of x1 and x2
+        #     if(x>=x1 and x<=x2):
+        #         return self.equation_of_line(x1,y1,x2,y2,x)
+        #     #if x is in the range of x2 and x3
+        #     elif(x>x2 and x<=x3):
+        #         return self.equation_of_line(x3,y3,x2,y2,x)
+        #     #or return zero
+        #     else:
+        #         return 0                  
+        # #calculate stop
+        # def cp_stop(self,x):
+        #     (x1,y1),(x2,y2),(x3,y3)=(-2.5, 0), (0, 1) ,(2.5, 0)
+        #     #if x is in the range of x1 and x2
+        #     if(x>=x1 and x<=x2):
+        #         return self.equation_of_line(x1,y1,x2,y2,x)
+        #     #if x is in the range of x2 and x3
+        #     elif(x>x2 and x<=x3):
+        #         return self.equation_of_line(x3,y3,x2,y2,x)
+        #     #or return zero
+        #     else:
+        #         return 0        
+        # #calculate right_near
+        # def cp_right_near(self,x):
+        #     (x1,y1),(x2,y2),(x3,y3)=(0, 0), (2.5, 1) ,(10, 0)
+        #     #if x is in the range of x1 and x2
+        #     if(x>=x1 and x<=x2):
+        #         return self.equation_of_line(x1,y1,x2,y2,x)
+        #     #if x is in the range of x2 and x3
+        #     elif(x>x2 and x<=x3):
+        #         return self.equation_of_line(x3,y3,x2,y2,x)
+        #     #or return zero
+        #     else:
+        #         return 0
+        # #calculate right_far
+        # def cp_right_far(self,x):
+        #     (x1,y1),(x2,y2),(x3,y3)=(5, 0) ,(10, 1),(10,0)
+        #     #if x is in the range of x1 and x2
+        #     if(x>=x1 and x<=x2):
+        #         return self.equation_of_line(x1,y1,x2,y2,x)
+        #     #if x is in the range of x2 and x3
+        #     elif(x2<=x):
+        #         return self.equation_of_line(x3,y3,x2,y2,x)
+        #     #or return zero
+        #     else:
+        #         return 0 
        #####################################################################################################
        # calculate datas for cv
        #calculate left_fast
@@ -451,12 +452,16 @@ class fuzzy_system:
         #inference
         ##########################################################################
         #define dictionary for member ship
-        #find same rules in same memeber.txt file
+        #find same rules in  memeber.txt file
+        #caculate rules for all force terms
         #calculate member shib for force 
         def mem_force(self,pa,pv,cp,cv):
-            mem=dict()
-            mem['stop']=max((max(min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_up_right(pa),self.pv_ccw_slow(pv)),min(self.pa_up_left(pa),self.pv_cw_slow(pv)))),min(self.pa_down_more_right(pa),self.pv_cw_slow(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_slow(pv)),min(self.pa_down(pa),self.pv_ccw_fast(pv)),min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_down(pa),self.pv_cw_fast(pv)),min(self.pa_down_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_ccw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_fast(pv)))
             
+            stop=max((max(min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_up_right(pa),self.pv_ccw_slow(pv)),min(self.pa_up_left(pa),self.pv_cw_slow(pv)))),min(self.pa_down_more_right(pa),self.pv_cw_slow(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_slow(pv)),min(self.pa_down(pa),self.pv_ccw_fast(pv)),min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_down(pa),self.pv_cw_fast(pv)),min(self.pa_down_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_ccw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_fast(pv)),min(self.cv_stop(cv),self.pv_stop(pv)))
+
+            right_fast=max(min(self.pa_up_more_right(pa),self.pv_ccw_slow(pv)),min(self.pa_up_more_right(pa),self.pv_cw_slow(pv)),min(self.pa_up_more_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_ccw_slow(pv)),min(
+                self.pa_down_right(pa),self.pv_ccw_slow(pv)),min(self.pa_down_right(pa),self.pv_cw_slow(pv)),
+                min(self.pa_up_right(pa),self.pv_cw_slow(pv)),min(self.pa_up_right(pa),self.pv_stop(pv)),min(self.pa_up_right(pa),self.pv_cw_fast(pv)),min(self.pa_up_left(pa),self.pv_cw_fast(pv)),min(self.pa_down(pa),self.pv_stop(pv)),min(self.pa_up(pa),self.pv_cw_fast(pv)),min(self.cv_stop(cv),self.pa_up(pa),self.pv_cw_fast(pv)),min(self.cv_right_fast(cv),self.pv_cw_slow(pv)),min(self.cv_left_slow(cv),self.pv_ccw_fast(pv)))
 
             
             
