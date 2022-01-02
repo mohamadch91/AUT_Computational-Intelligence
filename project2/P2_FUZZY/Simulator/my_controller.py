@@ -51,7 +51,7 @@ class fuzzy_system:
         # pv means angular velocity of pendulum
         # cp means position of cart
         # cv means velocity of cart
-        def pa_up_more_right(x):
+        def pa_up_more_right(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(0, 0) ,(30, 1), (60, 0)
             #where is x
             #if x is in the range of x1 and x2
@@ -64,7 +64,7 @@ class fuzzy_system:
             else:
                 return 0
         #calculate up right        
-        def pa_up_right(x):
+        def pa_up_right(self,x):
             (x1,y1),(x2,y2),(x3,y3)= (30, 0), (60, 1) ,(90, 0)
             #where is x
             #if x is in the range of x1 and x2
@@ -77,7 +77,7 @@ class fuzzy_system:
             else:
                 return 0                    
         #calculate up
-        def pa_up(x):
+        def pa_up(self,x):
             (x1,y1),(x2,y2),(x3,y3)= (60, 0) ,(90, 1) ,(120, 0)
             #where is x
             # if x is in the range of x1 and x2
@@ -90,7 +90,7 @@ class fuzzy_system:
             else:
                 return 0
         #calculate up left
-        def pa_up_left(x):
+        def pa_up_left(self,x):
             (x1,y1),(x2,y2),(x3,y3)= (90, 0), (120, 1) ,(150, 0)
             #where is x
             #if x is in the range of x1 and x2
@@ -103,7 +103,7 @@ class fuzzy_system:
             else:
                 return 0    
         #calculate up more left
-        def pa_up_more_left(x):
+        def pa_up_more_left(self,x):
             (x1,y1),(x2,y2),(x3,y3)= (120, 0) ,(150, 1), (180, 0)
             #where is x
             #if x is in the range of x1 and x2
@@ -116,7 +116,7 @@ class fuzzy_system:
             else:
                 return 0
         #calculate down more left
-        def pa_down_more_left(x):
+        def pa_down_more_left(self,x):
             (x1,y1),(x2,y2),(x3,y3)= (180, 0) ,(210, 1) ,(240, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -128,7 +128,7 @@ class fuzzy_system:
             else:
                 return 0    
         #calculate down left
-        def pa_down_left(x):
+        def pa_down_left(self,x):
             (x1,y1),(x2,y2),(x3,y3)= (210, 0), (240, 1) ,(270, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -140,7 +140,7 @@ class fuzzy_system:
             else:
                 return 0    
         #calculate down 
-        def pa_down(x):
+        def pa_down(self,x):
             (x1,y1),(x2,y2),(x3,y3)= (240, 0) ,(270, 1) ,(300, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -152,7 +152,7 @@ class fuzzy_system:
             else:
                 return 0
         #calculate down right
-        def pa_down_right(x):
+        def pa_down_right(self,x):
             (x1,y1),(x2,y2),(x3,y3)= (270, 0), (300, 1), (330, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -164,7 +164,7 @@ class fuzzy_system:
             else:
                 return 0
         #calculate down more right
-        def pa_down_more_right(x):
+        def pa_down_more_right(self,x):
             (x1,y1),(x2,y2),(x3,y3)= (300, 0) ,(330, 1), (360, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -178,7 +178,7 @@ class fuzzy_system:
         #calculate datas for pv
         ##################################################################################################################
 
-        def pv_cw_fast(x):
+        def pv_cw_fast(self,x):
             (x1,y1),(x2,y2),(x3,y3)= (-200, 0), (-200, 1), (-100, 0)
             #if x is in the range of x1 and x2
             if( x<=x2):
@@ -190,7 +190,7 @@ class fuzzy_system:
             else:
                 return 0
         #calculate cw slow
-        def pv_cw_slow(x):
+        def pv_cw_slow(self,x):
             (x1,y1),(x2,y2),(x3,y3)= (-200, 0), (-100, 1), (0, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -202,7 +202,7 @@ class fuzzy_system:
             else:
                 return 0
         #calculate stop
-        def pv_stop(x):
+        def pv_stop(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(-100, 0), (0, 1), (100, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -214,7 +214,7 @@ class fuzzy_system:
             else:
                 return 0
         #caculate ccw slow
-        def pa_ccw_slow(x):
+        def pa_ccw_slow(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(0, 0), (100, 1) ,(200, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -226,7 +226,7 @@ class fuzzy_system:
             else:
                 return 0        
         #calculate ccw fast
-        def pa_ccw_fast(x):
+        def pa_ccw_fast(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(100, 0), (200, 1), (200, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -239,7 +239,7 @@ class fuzzy_system:
                 return 0
     ##########################################################################################################            
         #calculate datas for cp
-        def cp_left_far(x):
+        def cp_left_far(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(-10,0),(-10, 1) (-5, 0);
             #if x is in the range of x1 and x2
             if(x<=x2):
@@ -251,7 +251,7 @@ class fuzzy_system:
             else:
                 return 0
         #calculate left_near
-        def cp_left_near(x):
+        def cp_left_near(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(-10, 0), (-2.5, 1) ,(0, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -263,7 +263,7 @@ class fuzzy_system:
             else:
                 return 0                  
         #calculate stop
-        def cp_stop(x):
+        def cp_stop(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(-2.5, 0), (0, 1) ,(2.5, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -275,7 +275,7 @@ class fuzzy_system:
             else:
                 return 0        
         #calculate right_near
-        def cp_right_near(x):
+        def cp_right_near(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(0, 0), (2.5, 1) ,(10, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -287,7 +287,7 @@ class fuzzy_system:
             else:
                 return 0
         #calculate right_far
-        def cp_right_far(x):
+        def cp_right_far(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(5, 0) ,(10, 1),(10,0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -301,7 +301,7 @@ class fuzzy_system:
        #####################################################################################################
        # calculate datas for cv
        #calculate left_fast
-        def cv_left_fast(x):
+        def cv_left_fast(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(-5,0),(-5, 1), (-2.5, 0);
            #if x is in the range of x1 and x2      
             if(x<=x2):
@@ -313,7 +313,7 @@ class fuzzy_system:
             else:
                 return 0
         #calculate left_slow
-        def cv_left_slow(x):
+        def cv_left_slow(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(-5, 0), (-1, 1), (0, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -325,7 +325,7 @@ class fuzzy_system:
             else:
                 return 0              
         #calculate stop
-        def cv_stop(x):
+        def cv_stop(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(-1, 0), (0, 1), (1, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -337,7 +337,7 @@ class fuzzy_system:
             else:
                 return 0
         #calculate right_slow
-        def cv_right_slow(x):
+        def cv_right_slow(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(0, 0), (1, 1), (5, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -349,7 +349,7 @@ class fuzzy_system:
             else:
                 return 0
         #calculate right_fast
-        def cv_right_fast(x):
+        def cv_right_fast(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(2.5, 0), (5, 1), (5, 0)
             #if x is in the range of x1 and x2
             if(x>=x1 and x<=x2):
@@ -362,7 +362,7 @@ class fuzzy_system:
                 return 0
         #####################################################################################################
         #caculate forcee data
-        def force_left_fast(x,lim):
+        def force_left_fast(self,x,lim):
             (x1,y1),(x2,y2),(x3,y3)=(-100, 0), (-80, 1) ,(-60, 0)
 
             #if x is in the range of x1 and x2
@@ -379,7 +379,7 @@ class fuzzy_system:
             #or return lim
             return  lim        
         #calculate force_left_slow
-        def force_left_slow(x,lim):
+        def force_left_slow(self,x,lim):
             (x1,y1),(x2,y2),(x3,y3)=(-80, 0) ,(-60, 1), (0, 0)
 
             #if x is in the range of x1 and x2
@@ -396,7 +396,7 @@ class fuzzy_system:
             #or return lim
             return lim
         #calculate force_stop
-        def force_stop(x,lim):
+        def force_stop(self,x,lim):
             (x1,y1),(x2,y2),(x3,y3)=(-60, 0) ,(0, 1) ,(60, 0)
 
             #if x is in the range of x1 and x2
@@ -413,7 +413,7 @@ class fuzzy_system:
             #or return lim
             return lim
         #calculate force_right_slow
-        def force_right_slow(x,lim):
+        def force_right_slow(self,x,lim):
             (x1,y1),(x2,y2),(x3,y3)=(0, 0), (60, 1), (80, 0)
 
             #if x is in the range of x1 and x2
@@ -430,7 +430,7 @@ class fuzzy_system:
             #or return lim
             return lim
         #calculate force_right_fast
-        def force_right_fast(x,lim):
+        def force_right_fast(self,x,lim):
             (x1,y1),(x2,y2),(x3,y3)=(60, 0) (80, 1) (100, 0)
 
             #if x is in the range of x1 and x2
@@ -453,9 +453,9 @@ class fuzzy_system:
         #define dictionary for member ship
         #find same rules in same memeber.txt file
         #calculate member shib for force 
-        def mem_force(pa,pv,cp,cv):
+        def mem_force(self,pa,pv,cp,cv):
             mem=dict()
+            mem['stop']=max((max(min(self.pa_up(pa),),min(),min())),)
             
             
             
-                
