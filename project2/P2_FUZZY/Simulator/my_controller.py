@@ -468,7 +468,7 @@ class fuzzy_system:
             #we calculate integral of fuzzy set and then we get the value of the defuzzyfication of force
             #we use the trapezoidal rule
             #it means sum of points is integral of fuzzy set
-            points=np.linspace(-100,100,500)
+            points=np.linspace(-100,100,2000)
             inetgral =0.0
             sums=0.0
             for i in range(len(points)):
@@ -478,8 +478,8 @@ class fuzzy_system:
                 force_left_slow=min(left_slow,self.force_left_slow(points[i]))
                 force_Stop=min(stop,self.force_stop(points[i]))
                 max_force=max(force_right_fast,force_right_slow,force_left_fast,force_left_slow,force_Stop)
-                inetgral+=max_force*(points[1]-points[0])
-                sums+=max_force*points[i]*(points[1]-points[0])
+                inetgral+=max_force
+                sums+=max_force*points[i]
             #check if the integral is zero
             if inetgral==0:
                 return 0
