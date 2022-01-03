@@ -464,7 +464,6 @@ class fuzzy_system:
         def defuzzyfication(self,input):
            
             stop,right_fast,left_fast,left_slow,right_slow=self.mem_force(input['pa'],input['pv'],input['cv'])
-            print (right_fast,left_fast,left_slow,right_slow,stop)
             #we calculate integral of fuzzy set and then we get the value of the defuzzyfication of force
             #we use the trapezoidal rule
             #it means sum of points is integral of fuzzy set
