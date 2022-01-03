@@ -469,6 +469,7 @@ class fuzzy_system:
             #it means sum of points is integral of fuzzy set
             points=np.linspace(-100,100,1000)
             inetgral =0.0
+            #sums is centroid
             sums=0.0
             for i in range(len(points)):
                 force_right_fast=min(right_fast,self.force_right_fast(points[i]))
