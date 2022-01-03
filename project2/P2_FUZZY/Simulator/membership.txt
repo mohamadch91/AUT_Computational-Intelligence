@@ -34,7 +34,7 @@ RULE 14: IF (pa IS down_more_right) AND (pv IS cw_fast) THEN force IS stop;
 RULE 15: IF (pa IS down_more_left) AND (pv IS cw_fast) THEN force IS stop;
 ///
 RULE 16: IF (pa IS down_more_left) AND (pv IS ccw_fast) THEN force IS stop;
-RULE 44: IF (cv Is stop) and (pv IS stop ) Then force Is stop;
+RULE 44: IF (cv Is stop) and (pv IS stop ) and pa is up  Then force Is stop;
 
 we need to find maximum of all this rules
 /////////completre rules for stop
@@ -64,11 +64,11 @@ RULE 35: IF (pa IS down) AND (pv IS stop) THEN force IS right_fast;
 /////////////
 RULE 41: IF (pa IS up) AND (pv IS cw_fast) THEN force IS right_fast;
 ///////////
-RULE 43: IF (cv IS stop) AND (pa IS up) AND (pv IS cw_fast) THEN force IS right_fast;
+RULE 43: IF (cv IS left_fast) and (pv IS stop ) Then force is right_fast;
+//////////////
+RULE 46: IF IF (cv IS left_fast) and (pv IS cw_fast ) Then force is right_fast;
 ///////////
-RULE 46: IF (cv IS right_fast) AND (pv IS cw_slow) THEN force IS right_fast;
-///////////
-RULE 54: IF (cv IS left_slow) AND (pv IS ccw_fast) THEN force IS right_fast;
+RULE 54: IF IF (cv IS left_fast) and (pv IS cw_slow ) Then force is right_fast;
 ///////////
 complete right_fast rules
 /////////////////////////////////////////////////////////////////////////////////////////

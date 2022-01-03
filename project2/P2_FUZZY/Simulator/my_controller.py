@@ -5,8 +5,8 @@ from math import degrees
 
 import numpy as np
 
-class FuzzyController:
-
+class FuzzyController2:
+    
     def __init__(self, fcl_path):
         self.system = fuzzy_system()
 
@@ -28,7 +28,7 @@ class FuzzyController:
 
     def decide(self, world):
         output = self._make_output()
-        output['force'] = self.system.defuzzyfication(self._make_input(world))
+        output['force']=self.system.defuzzyfication(self._make_input(world),output)
         return output['force']
 class fuzzy_system:
         def __int__(self):
@@ -41,12 +41,11 @@ class fuzzy_system:
         #calculate line slope
         def equation_of_line(self,x1,y1,x2,y2,x):
             if (x1 == x2):
-                y = (float)(max(y1, y2))
+                y = float((max(y1, y2)))
             else :
-                m = (y2-y1)/(x2-x1)
+                m = (y2-y1)/float((x2-x1))
                 b = y1 - m*x1
                 y = m*x + b
-
             return y    
         #define function to calculate rules from complex.fcl
         #pa means angle of pendulum
@@ -376,7 +375,7 @@ class fuzzy_system:
                 y= self.equation_of_line(x3,y3,x2,y2,x)
             else:
                 y=0         
-            return y      
+            return float(y)      
         #calculate force_left_slow
         def force_left_slow(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(-80, 0) ,(-60, 1), (0, 0)
@@ -390,7 +389,7 @@ class fuzzy_system:
             else:
                 y=0         
             
-            return y
+            return float(y)
         #calculate force_stop
         def force_stop(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(-60, 0) ,(0, 1) ,(60, 0)
@@ -403,7 +402,7 @@ class fuzzy_system:
                 y= self.equation_of_line(x3,y3,x2,y2,x)
             else:
                 y=0         
-            return y
+            return float(y)
         #calculate force_right_slow
         def force_right_slow(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(0, 0), (60, 1), (80, 0)
@@ -416,7 +415,7 @@ class fuzzy_system:
                 y= self.equation_of_line(x3,y3,x2,y2,x)
             else:
                 y=0         
-            return y
+            return float(y)
         #calculate force_right_fast
         def force_right_fast(self,x):
             (x1,y1),(x2,y2),(x3,y3)=(60, 0), (80, 1) ,(100, 0)
@@ -429,7 +428,7 @@ class fuzzy_system:
                 y= self.equation_of_line(x3,y3,x2,y2,x)
             else:
                 y=0         
-            return y
+            return float(y) 
         
         ##########################################################################
         #inference
@@ -437,31 +436,37 @@ class fuzzy_system:
         #define dictionary for member ship
         #find same rules in  memeber.txt file
         #caculate rules for all force terms
-        #calculate member shib for force 
+        #calculate member shib for force
+        # Inference
         def mem_force(self,pa,pv,cv):
             
-            stop=max((max(min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_up_right(pa),self.pv_ccw_slow(pv)),min(self.pa_up_left(pa),self.pv_cw_slow(pv)))),min(self.pa_down_more_right(pa),self.pv_cw_slow(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_slow(pv)),min(self.pa_down(pa),self.pv_ccw_fast(pv)),min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_down(pa),self.pv_cw_fast(pv)),min(self.pa_down_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_ccw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_fast(pv)))
-
+            stop=max(max(min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_up_right(pa),self.pv_ccw_slow(pv)),min(self.pa_up_left(pa),self.pv_cw_slow(pv))),min(self.pa_down_more_right(pa),self.pv_cw_slow(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_slow(pv)),min(self.pa_down(pa),self.pv_ccw_fast(pv)),min(self.pa_up(pa),self.pv_stop(pv)),min(self.pa_down(pa),self.pv_cw_fast(pv)),min(self.pa_down_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_right(pa),self.pv_ccw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_ccw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_ccw_fast(pv)),min(self.cv_stop(cv),self.pv_stop(pv),self.pa_up(pa)))
+        ##################################
             right_fast=max(min(self.pa_up_more_right(pa),self.pv_ccw_slow(pv)),min(self.pa_up_more_right(pa),self.pv_cw_slow(pv)),min(self.pa_up_more_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_ccw_slow(pv)),min(
                 self.pa_down_right(pa),self.pv_ccw_slow(pv)),min(self.pa_down_right(pa),self.pv_cw_slow(pv)),
                 min(self.pa_up_right(pa),self.pv_cw_slow(pv)),min(self.pa_up_right(pa),self.pv_stop(pv)),min(self.pa_up_right(pa),self.pv_cw_fast(pv)),min(self.pa_up_left(pa),self.pv_cw_fast(pv)),min(self.pa_down(pa),self.pv_stop(pv)),min(self.pa_up(pa),self.pv_cw_fast(pv)))
+                ################################
             left_fast=max(min(self.pa_up_more_left(pa),self.pv_ccw_slow(pv)),min(self.pa_up_more_left(pa),self.pv_cw_slow(pv)),min(self.pa_up_more_left(pa),self.pv_ccw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_cw_slow(pv)),min(
                 self.pa_down_left(pa),self.pv_cw_slow(pv)),min(self.pa_down_left(pa),self.pv_ccw_slow(pv)),
-                min(self.pa_up_left(pa),self.pv_ccw_slow(pv)),min(self.pa_up_left(pa),self.pv_stop(pv)),min(self.pa_up_left(pa),self.pv_ccw_fast(pv)),min(self.pa_up_right(pa),self.pv_ccw_fast(pv)),min(self.pa_up(pa),self.pv_stop(pv)))   
+                min(self.pa_up_left(pa),self.pv_ccw_slow(pv)),min(self.pa_up_left(pa),self.pv_stop(pv)),min(self.pa_up_left(pa),self.pv_ccw_fast(pv)),min(self.pa_up_right(pa),self.pv_ccw_fast(pv)),min(self.pa_up(pa),self.pv_ccw_fast(pv)))  
+                ############################################################################ 
             left_slow=max(min(self.pa_up_more_right(pa),self.pv_ccw_fast(pv)),min(self.pa_down_left(pa),self.pv_ccw_fast(pv)),min(
                 self.pa_up_left(pa),self.pv_cw_slow(pv)
             ),min(self.pa_up(pa),self.pv_ccw_slow(pv)))
+            ##################33
             right_slow=max(min(self.pa_up_more_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_right(pa),self.pv_cw_fast(pv)),min(
                 self.pa_up_right(pa),self.pv_ccw_slow(pv)
             ),min(self.pa_up(pa),self.pv_cw_slow(pv)))
             return stop,right_fast,left_fast,left_slow,right_slow
         #defuzzyfication
-        def defuzzyfication(self,input):
-            right_fast,left_fast,left_slow,right_slow,stop=self.mem_force(input['pa'],input['pv'],input['cv'])
+        def defuzzyfication(self,input,output):
+           
+            stop,right_fast,left_fast,left_slow,right_slow=self.mem_force(input['pa'],input['pv'],input['cv'])
+            print (right_fast,left_fast,left_slow,right_slow,stop)
             #we calculate integral of fuzzy set and then we get the value of the defuzzyfication of force
             #we use the trapezoidal rule
             #it means sum of points is integral of fuzzy set
-            points=np.linspace(-100,100,1000)
+            points=np.linspace(-100,100,500)
             inetgral =0.0
             sums=0.0
             for i in range(len(points)):
@@ -478,7 +483,8 @@ class fuzzy_system:
                 return 0
             #if not we calculate the defuzzyfication
             else:
-                return sums/inetgral    
+                return sums/inetgral  
+           
             
 
 
