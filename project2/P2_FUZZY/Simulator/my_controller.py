@@ -5,7 +5,7 @@ from math import degrees
 
 import numpy as np
 
-class FuzzyController2:
+class FuzzyController:
     
     def __init__(self, fcl_path):
         self.system = fuzzy_system()
@@ -25,10 +25,9 @@ class FuzzyController2:
             force = 0.
         )
 
-
     def decide(self, world):
         output = self._make_output()
-        output['force']=self.system.defuzzyfication(self._make_input(world),output)
+        output['force']=self.system.defuzzyfication(self._make_input(world))
         return output['force']
 class fuzzy_system:
         def __int__(self):
@@ -444,22 +443,25 @@ class fuzzy_system:
         ##################################
             right_fast=max(min(self.pa_up_more_right(pa),self.pv_ccw_slow(pv)),min(self.pa_up_more_right(pa),self.pv_cw_slow(pv)),min(self.pa_up_more_right(pa),self.pv_cw_fast(pv)),min(self.pa_down_more_right(pa),self.pv_ccw_slow(pv)),min(
                 self.pa_down_right(pa),self.pv_ccw_slow(pv)),min(self.pa_down_right(pa),self.pv_cw_slow(pv)),
-                min(self.pa_up_right(pa),self.pv_cw_slow(pv)),min(self.pa_up_right(pa),self.pv_stop(pv)),min(self.pa_up_right(pa),self.pv_cw_fast(pv)),min(self.pa_up_left(pa),self.pv_cw_fast(pv)),min(self.pa_down(pa),self.pv_stop(pv)),min(self.pa_up(pa),self.pv_cw_fast(pv)))
+                min(self.pa_up_right(pa),self.pv_cw_slow(pv)),min(self.pa_up_right(pa),self.pv_stop(pv)),min(self.pa_up_right(pa),self.pv_cw_fast(pv)),min(self.pa_up_left(pa),self.pv_cw_fast(pv)),min(self.pa_down(pa),self.pv_stop(pv)),min(self.pa_up(pa),self.pv_cw_fast(pv)),min(self.cv_left_fast(cv),self.pv_stop(pv)),min(self.cv_left_fast(cv),self.pv_cw_fast(pv)),min(
+                    self.cv_left_fast(cv),self.pv_cw_slow(pv)),min(self.cv_stop(cv),self.pv_ccw_fast(pv)))
                 ################################
             left_fast=max(min(self.pa_up_more_left(pa),self.pv_ccw_slow(pv)),min(self.pa_up_more_left(pa),self.pv_cw_slow(pv)),min(self.pa_up_more_left(pa),self.pv_ccw_fast(pv)),min(self.pa_down_more_left(pa),self.pv_cw_slow(pv)),min(
                 self.pa_down_left(pa),self.pv_cw_slow(pv)),min(self.pa_down_left(pa),self.pv_ccw_slow(pv)),
-                min(self.pa_up_left(pa),self.pv_ccw_slow(pv)),min(self.pa_up_left(pa),self.pv_stop(pv)),min(self.pa_up_left(pa),self.pv_ccw_fast(pv)),min(self.pa_up_right(pa),self.pv_ccw_fast(pv)),min(self.pa_up(pa),self.pv_ccw_fast(pv)))  
+                min(self.pa_up_left(pa),self.pv_ccw_slow(pv)),min(self.pa_up_left(pa),self.pv_stop(pv)),min(self.pa_up_left(pa),self.pv_ccw_fast(pv)),min(self.pa_up_right(pa),self.pv_ccw_fast(pv)),min(self.pa_up(pa),self.pv_ccw_fast(pv)),min(self.cv_right_fast(cv),self.pv_stop(pv)),min(self.cv_right_fast(cv),self.pv_ccw_fast(pv)),min(
+                    self.cv_right_fast(cv),self.pv_ccw_slow(pv)),min(self.cv_stop(cv),self.pv_ccw_fast(pv)))  
                 ############################################################################ 
             left_slow=max(min(self.pa_up_more_right(pa),self.pv_ccw_fast(pv)),min(self.pa_down_left(pa),self.pv_ccw_fast(pv)),min(
                 self.pa_up_left(pa),self.pv_cw_slow(pv)
-            ),min(self.pa_up(pa),self.pv_ccw_slow(pv)))
+            ),min(self.pa_up(pa),self.pv_ccw_slow(pv)),min(self.cv_right_fast(cv),self.pv_cw_slow(pv)),min(self.cv_left_slow(cv),self.pv_ccw_fast(pv)),min(self.cv_left_fast(cv),self.pv_ccw_fast(pv)))
             ##################33
             right_slow=max(min(self.pa_up_more_left(pa),self.pv_cw_fast(pv)),min(self.pa_down_right(pa),self.pv_cw_fast(pv)),min(
                 self.pa_up_right(pa),self.pv_ccw_slow(pv)
-            ),min(self.pa_up(pa),self.pv_cw_slow(pv)))
+            ),min(self.pa_up(pa),self.pv_cw_slow(pv)),min(self.cv_left_slow(cv),self.pv_ccw_slow(pv)),min(self.cv_right_slow(cv),
+            self.pv_cw_slow(pv)),min(self.cv_right_slow(cv),self.pv_cw_fast(pv)))
             return stop,right_fast,left_fast,left_slow,right_slow
         #defuzzyfication
-        def defuzzyfication(self,input,output):
+        def defuzzyfication(self,input):
            
             stop,right_fast,left_fast,left_slow,right_slow=self.mem_force(input['pa'],input['pv'],input['cv'])
             print (right_fast,left_fast,left_slow,right_slow,stop)
