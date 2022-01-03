@@ -484,7 +484,7 @@ class fuzzy_system:
                 return 0
             #if not we calculate the defuzzyfication
             else:
-                return sums/inetgral  
+                    return sums/inetgral
            
             
 
