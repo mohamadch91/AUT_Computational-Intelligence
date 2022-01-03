@@ -467,7 +467,7 @@ class fuzzy_system:
             #we calculate integral of fuzzy set and then we get the value of the defuzzyfication of force
             #we use the trapezoidal rule
             #it means sum of points is integral of fuzzy set
-            points=np.linspace(-100,100,2000)
+            points=np.linspace(-100,100,1000)
             inetgral =0.0
             sums=0.0
             for i in range(len(points)):
