@@ -10,7 +10,7 @@ class NeuralNetwork:
         :param layer_sizes: A list containing neuron numbers in each layers. For example [3, 10, 2] means that there are
         3 neurons in the input layer, 10 neurons in the hidden layer, and 2 neurons in the output layer.
         """
-
+        self.layers=layer_sizes
         np.random.seed(1)
         self.w=[]
         self.b=[]
@@ -25,11 +25,8 @@ class NeuralNetwork:
         :param x: Vector of a layer in our network.
         :return: Vector after applying activation function.
         """
-        new_x = []
-        for i in range(len(x)):
-            z = 1 / (1 + np.exp(-x[i]))
-            new_x.append(z)
-        return new_x
+        ans = 1 / (1 + np.exp(-x))
+        return ans
 
 
     def forward(self, x):
@@ -39,4 +36,11 @@ class NeuralNetwork:
         :return: Output vector
         """
         # TODO (Implement forward function here)
-        pass
+        s=[]
+        for i in range(len(self.layers)-1):
+            if(i==0):
+                s=self.activation(self.w[i]@x+self.b[i])
+            else:
+                s=self.activation(self.w[i]@s+self.b[i])
+        return s       
+
