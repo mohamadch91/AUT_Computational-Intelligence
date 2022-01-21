@@ -37,10 +37,12 @@ class NeuralNetwork:
         """
         # TODO (Implement forward function here)
         s=[]
-        for i in range(len(self.layers)-1):
-            if(i==0):
-                s=self.activation(self.w[i]@x+self.b[i])
-            else:
-                s=self.activation(self.w[i]@s+self.b[i])
-        return s       
-
+        for j in range(len(x)):
+            k=[]
+            for i in range(len(self.layers)-1):
+                if(i==0):
+                    s=self.activation(self.w[i]@x[j]+self.b[i])
+                else:
+                    s=self.activation(self.w[i]@s+self.b[i])
+            s.append(k)
+        return s
