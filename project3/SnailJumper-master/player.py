@@ -96,7 +96,6 @@ class Player(pygame.sprite.Sprite):
 
                         else:
                             temp = (player_y - obstacles[i]['y'])
-                            print("salam4")
 
                     x.append(temp / 756)
 
@@ -117,7 +116,6 @@ class Player(pygame.sprite.Sprite):
         """
         # TODO (change player's gravity here by calling self.change_gravity)
         input_array = self.make_input(screen_width, screen_height, obstacles, player_x, player_y)
-
         # print(player_x, player_y, obstacles)
         answer = self.nn.forward(input_array)
 

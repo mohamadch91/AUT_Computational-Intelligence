@@ -48,7 +48,7 @@ class Evolution:
         # for i in range(num_players):
         #     temp_players=[]
         #     for j in range(3):
-        #         x=random.randint(0,len(players_copy))
+        #         x=random.randint(0,len(players_copy)-1)
         #         temp_players.append(players_copy[x])
         #     best_fitness=temp_players[0]
         #     for player in temp_players:
@@ -78,7 +78,8 @@ class Evolution:
             for i in range(num_players):
                 temp_players=[]
                 for j in range(3):
-                    x=random.randint(0,len(prev_players))
+                    x=random.randint(0,len(prev_players)-1)
+                    print(x)
                     temp_players.append(prev_players[x])
                 best_fitness=temp_players[0]
                 for player in temp_players:
@@ -86,26 +87,30 @@ class Evolution:
                         best_fitness=player
                 new_parents.append(best_fitness)
             children=[]
-            for j in range(num_players/2):
-                parent1=random.randint(0,len(new_parents))
-                parent2=random.randint(0,len(new_parents))
-                parent1=new_parents[parent1]
-                parent2=new_parents[parent2]
+            ranger=int(num_players/2)
+            for j in range(ranger):
+                parent1=random.randint(0,len(new_parents)-1)
+                parent2=random.randint(0,len(new_parents)-1)
+
 
                 while(parent1==parent2):
-                    parent2 = random.randint(0, len(new_parents))
+                    parent2 = random.randint(0, len(new_parents)-1)
+                parent1 = new_parents[parent1]
+                parent2 = new_parents[parent2]
                 children1=self.clone_player(parent1)
                 children2=self.clone_player(parent2)
                 for i in range(25):
                     children1.nn.w[0][i]=parent2.nn.w[0][i]
                     children2.nn.w[0][i]=parent1.nn.w[0][i]
+                #mutation
                 for k in range(25,50):
                     for counter in range(5):
                         children1.nn.w[0][k][counter]=random.uniform(0,1)
-
-
-            new_players = prev_players  # DELETE THIS AFTER YOUR IMPLEMENTATION
-            return new_players
+                        children2.nn.w[0][k][counter]=random.uniform(0,1)
+                children.append(children1)
+                children.append(children2)
+            # new_players = prev_players  # DELETE THIS AFTER YOUR IMPLEMENTATION
+            return children
 
     def clone_player(self, player):
         """
