@@ -1,6 +1,8 @@
 import random
 
 import pygame
+
+import nn
 from variables import global_variables
 from nn import NeuralNetwork
 
@@ -35,8 +37,70 @@ class Player(pygame.sprite.Sprite):
         if self.game_mode == "Neuroevolution":
             self.fitness = 0  # Initial fitness
 
-            layer_sizes = [50, 75,75,8 ]  # TODO (Design your architecture here by changing the values)
+            layer_sizes = [5, 75, 2]  # TODO (Design your architecture here by changing the values)
             self.nn = NeuralNetwork(layer_sizes)
+
+    def make_input(self, screen_width, screen_height, obstacles, player_x, player_y):
+        """
+                Just creates input vector of the neural network
+
+                :param screen_width: Game's screen width which is 604.
+                :param screen_height: Game's screen height which is 800.
+                :param obstacles: List of obstacles that are above the player. Each entry is a dictionary having 'x' and 'y' of
+                the obstacle as the key. The list is sorted based on the obstacle's 'y' point on the screen. Hence, obstacles[0]
+                is the nearest obstacle to our player. It is also worthwhile noting that 'y' range is in [-100, 656], such that
+                -100 means it is off screen (Topmost point) and 656 means in parallel to our player's 'y' point.
+                :param player_x: 'x' position of the player
+                :param player_y: 'y' position of the player
+                :return 'x' is vector of inputs of first layer of neural networks
+        """
+        """ multiply by  2 distance of obstacles which in pleyer way """
+        x = []
+        if len(obstacles) == 0:
+            x.append(player_x / 211)
+            x.append(player_y / 756)
+            x.append(screen_width / 604)
+            x.append(screen_height / 800)
+            x.append(0)
+        else:
+            if (len(obstacles) < 5):
+                temp = 0
+                for i in obstacles:
+                    if (player_x >= 350):
+                        if (i['x'] == 410):
+                            temp = (player_y - i['y']) * 2
+                        else:
+                            temp = (player_y - i['y'])
+                    elif (player_x < 350):
+                        if (i['x'] == 177):
+                            temp = (player_y - i['y']) * 2
+                        else:
+                            temp = (player_y - i['y'])
+                    x.append(temp / 756)
+                for j in range(5 - len(x)):
+                    x.append(0)
+            else:
+                for i in range(5):
+                    temp = 0
+                    if (player_x >= 350):
+                        if (obstacles[i]['x'] == 410):
+                            temp = (player_y - obstacles[i]['y']) * 2
+
+                        else:
+                            temp = (player_y - obstacles[i]['y'])
+
+
+                    elif (player_x < 350):
+                        if (obstacles[i]['x'] == 177):
+                            temp = (player_y - obstacles[i]['y']) * 2
+
+                        else:
+                            temp = (player_y - obstacles[i]['y'])
+                            print("salam4")
+
+                    x.append(temp / 756)
+
+        return x
 
     def think(self, screen_width, screen_height, obstacles, player_x, player_y):
         """
@@ -52,12 +116,21 @@ class Player(pygame.sprite.Sprite):
         :param player_y: 'y' position of the player
         """
         # TODO (change player's gravity here by calling self.change_gravity)
+        input_array = self.make_input(screen_width, screen_height, obstacles, player_x, player_y)
 
-        # This is a test code that changes the gravity based on a random number. Remove it before your implementation.
-        if random.randint(0, 2):
+        # print(player_x, player_y, obstacles)
+        answer = self.nn.forward(input_array)
+
+        maximum = max(answer)
+        if (maximum == answer[0]):
             self.change_gravity('left')
         else:
             self.change_gravity('right')
+        # This is a test code that changes the gravity based on a random number. Remove it before your implementation.
+        # if random.randint(0, 2):
+        #     self.change_gravity('left')
+        # else:
+        #     self.change_gravity('right')
 
     def change_gravity(self, new_gravity):
         """
