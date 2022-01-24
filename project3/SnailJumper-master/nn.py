@@ -13,7 +13,7 @@ class NeuralNetwork:
         3 neurons in the input layer, 10 neurons in the hidden layer, and 2 neurons in the output layer.
         """
         self.layers=layer_sizes
-        np.random.seed(1)
+        np.random.seed()
         self.w=[]
         self.b=[]
         for i in range(len(layer_sizes)-1):
@@ -37,7 +37,7 @@ class NeuralNetwork:
         :param n: length of second dimension of array
         :return: return normalized array
         """
-        # print(x)
+        print(x)
         sum=0
         for j in range(n):
             sum+=x[0][j]
@@ -47,9 +47,8 @@ class NeuralNetwork:
             temp_sum+=(x[0][j]-avg)**2
         temp_sum/=n
 
-        var=math.sqrt(temp_sum)
         for j in range(n):
-            x[0][j]=(x[0][j]-avg)/(var+0.001)
+            x[0][j]=(x[0][j]-avg)/math.sqrt(temp_sum+0.01)
         return x
 
     def forward(self, x):
@@ -60,13 +59,11 @@ class NeuralNetwork:
         """
         # TODO (Implement forward function here)
         s=[]
-        # x=np.reshape(x,(1,len(x)))
-        # print(x)
-        # print(self.b[0])
         for i in range(len(self.layers)-1):
             if(i==0):
                 s=self.activation((self.w[i]@x)+self.b[i])
-                s=self.batch_normalize(s,self.layers[i+1])
+                # s=self.batch_normalize(s,self.layers[i+1])
+
             else:
                 s = self.activation((self.w[i]@s[0])+self.b[i])
         return s[0]

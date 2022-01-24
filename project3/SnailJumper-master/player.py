@@ -1,8 +1,8 @@
 import random
 
 import pygame
+import math
 
-import nn
 from variables import global_variables
 from nn import NeuralNetwork
 
@@ -37,9 +37,25 @@ class Player(pygame.sprite.Sprite):
         if self.game_mode == "Neuroevolution":
             self.fitness = 0  # Initial fitness
 
-            layer_sizes = [5, 75, 2]  # TODO (Design your architecture here by changing the values)
+            layer_sizes = [4, 10, 2]  # TODO (Design your architecture here by changing the values)
             self.nn = NeuralNetwork(layer_sizes)
 
+    def batch_normalize(self, x):
+        """
+
+        :param x: array which want to normilize
+        :param n: length of second dimension of array
+        :return: return normalized array
+        """
+        avg=sum(x)/len(x)
+        temp_sum = 0
+        for j in range(len(x)):
+            temp_sum += (x[j] - avg) ** 2
+        temp_sum=temp_sum/len(x)
+        for j in range(len(x)):
+            x[j] = ((x[j] - avg) / math.sqrt(temp_sum + 0.01))/4
+
+        return x
     def make_input(self, screen_width, screen_height, obstacles, player_x, player_y):
         """
                 Just creates input vector of the neural network
@@ -56,49 +72,46 @@ class Player(pygame.sprite.Sprite):
         """
         """ multiply by  2 distance of obstacles which in pleyer way """
         x = []
+        random.seed()
         if len(obstacles) == 0:
-            x.append(player_x / 211)
-            x.append(player_y / 756)
-            x.append(screen_width / 604)
-            x.append(screen_height / 800)
-            x.append(0)
+            x.append(random.randint(0,player_x) / 211)
+            x.append(random.randint(0,player_y) / 756)
+            x.append(random.randint(0,screen_width) / 604)
+            x.append(random.randint(0,screen_height)/ 800)
         else:
-            if (len(obstacles) < 5):
+            if (len(obstacles) < 4):
                 temp = 0
                 for i in obstacles:
-                    if (player_x >= 350):
-                        if (i['x'] == 410):
-                            temp = (player_y - i['y']) * 2
-                        else:
-                            temp = (player_y - i['y'])
-                    elif (player_x < 350):
-                        if (i['x'] == 177):
-                            temp = (player_y - i['y']) * 2
-                        else:
-                            temp = (player_y - i['y'])
-                    x.append(temp / 756)
-                for j in range(5 - len(x)):
-                    x.append(0)
+                    if(i['x']==177 and player_x==177):
+                        temp=i['y']
+                    elif(i['x']==410 and player_x==410):
+                        temp=i['y']
+                    elif ((i['x']<400 and i['x']>177) and (player_x<400 and player_x>180)):
+                        temp=i['y']*2
+                    elif ((i['x']<400 and i['x']>177) and (player_x==410 or player_x==177)):
+                        temp=i['y']
+                    x.append(temp/756)
+                for k in range(4-len(obstacles)):
+                    x.append(random.uniform(0,1))
+
             else:
-                for i in range(5):
-                    temp = 0
-                    if (player_x >= 350):
-                        if (obstacles[i]['x'] == 410):
-                            temp = (player_y - obstacles[i]['y']) * 2
-
-                        else:
-                            temp = (player_y - obstacles[i]['y'])
-
-
-                    elif (player_x < 350):
-                        if (obstacles[i]['x'] == 177):
-                            temp = (player_y - obstacles[i]['y']) * 2
-
-                        else:
-                            temp = (player_y - obstacles[i]['y'])
-
-                    x.append(temp / 756)
-
+                temp_answers=[]
+                for i in range(len(obstacles)):
+                    temp=0
+                    if (obstacles[i]['x'] == 177 and player_x == 177):
+                        temp = obstacles[i]['y']
+                    elif (obstacles[i]['x'] == 410 and player_x == 410):
+                        temp = obstacles[i]['y']
+                    elif ((obstacles[i]['x'] < 400 and obstacles[i]['x'] > 177) and (player_x < 400 and player_x > 180)):
+                        temp = i['y'] * 2
+                    elif ((obstacles[i]['x'] < 400 and obstacles[i]['x'] > 177) and (player_x == 410 or player_x == 177)):
+                        temp = obstacles[i]['y']
+                    temp_answers.append(temp / 756)
+                x=temp_answers[:4]
+        print(x)
+        # x=self.batch_normalize(x)
+        # print(x)
+        # print("kir khar")
         return x
 
     def think(self, screen_width, screen_height, obstacles, player_x, player_y):
@@ -118,9 +131,12 @@ class Player(pygame.sprite.Sprite):
         input_array = self.make_input(screen_width, screen_height, obstacles, player_x, player_y)
         # print(player_x, player_y, obstacles)
         answer = self.nn.forward(input_array)
-
         maximum = max(answer)
+        # print(answer)
+        print(answer,maximum)
+        #
         if (maximum == answer[0]):
+            # print("left")
             self.change_gravity('left')
         else:
             self.change_gravity('right')
