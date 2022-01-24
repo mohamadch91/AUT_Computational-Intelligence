@@ -71,108 +71,55 @@ class Player(pygame.sprite.Sprite):
         """
         """ multiply by  2 distance of obstacles which in pleyer way """
         x = []
-        # x.append(player_x)
-        # random.seed()
-        # if len(obstacles) == 0:
-        #     for i in range(4):
-        #         x.append(0)
-        # else:
-        #     bug = list(filter(lambda d: 177 < d['y'] < 41, obstacles))
-        #     flag=random.randint(1,800)%10
-        #     if (len(obstacles) < 4):
-        #         if(flag>5):
-        #             for i in range(len(obstacles)):
-        #                 if(len(bug)>0):
-        #                     if (i != len(obstacles) - 1 and (obstacles[i + 1]['x'] > 177) and (obstacles[i + 1]['x'] < 400) ):
-        #                         distance = (math.sqrt(
-        #                             (obstacles[i]['x'] - player_x) ** 2 + (obstacles[i]['y'] - player_y) ** 2) * 2)
-        #                     else:
-        #                         distance = (math.sqrt((obstacles[i]['x'] - player_x) ** 2 + (obstacles[i]['y'] - player_y) ** 2))
-        #                     x.append(distance)
-        #                 else:
-        #                     distance = (math.sqrt((obstacles[i]['x'] - player_x) ** 2 + (obstacles[i]['y'] - player_y) ** 2))
-        #                     x.append(distance)
-        #             for k in range(4-len(obstacles)):
-        #                 x.append(0)
-        #         else:
-        #             for i in range(len(obstacles)):
-        #                 if (len(bug) > 0):
-        #                     if (i != len(obstacles) - 1 and (obstacles[i + 1]['x'] > 177) and (
-        #                             obstacles[i + 1]['x'] < 400)):
-        #                         distance = obstacles[i]['y']
-        #                     else:
-        #                         distance = obstacles[i]['y']*-0.5
-        #                     x.append(distance)
-        #                 else:
-        #                     if(obstacles[i]['x']==177 and player_x==177):
-        #                         distance=obstacles[i]['y']*2
-        #                     elif(obstacles[i]['x']==410 and player_x==410):
-        #                         distance = obstacles[i]['y'] * 2
-        #                     else:
-        #                         distance=obstacles[i]['y']*-1
-        #                     x.append(distance)
-        #             for k in range(4 - len(obstacles)):
-        #                 x.append(0)
-        #     else:
-        #         if (flag >5):
-        #             for i in range(len(obstacles)):
-        #                 if (len(bug) > 0):
-        #                     if (i != len(obstacles) - 1 and (obstacles[i + 1]['x'] > 177) and (
-        #                             obstacles[i + 1]['x'] < 400)):
-        #                         distance = (math.sqrt((obstacles[i]['x'] - player_x) ** 2 + (obstacles[i]['y'] - player_y) ** 2) * 2)
-        #                     else:
-        #                         distance = (math.sqrt(
-        #                             (obstacles[i]['x'] - player_x) ** 2 + (obstacles[i]['y'] - player_y) ** 2))
-        #                     x.append(distance)
-        #                 else:
-        #                     distance = (
-        #                         math.sqrt((obstacles[i]['x'] - player_x) ** 2 + (obstacles[i]['y'] - player_y) ** 2))
-        #                     x.append(distance)
-        #             for k in range(4 - len(obstacles)):
-        #                 x.append(0)
-        #         else:
-        #             for i in range(len(obstacles)):
-        #                 if (len(bug) > 0):
-        #                     if (i != len(obstacles) - 1 and (obstacles[i + 1]['x'] > 177) and (
-        #                             obstacles[i + 1]['x'] < 400)):
-        #                         distance = obstacles[i]['y']
-        #                     else:
-        #                         distance = obstacles[i]['y'] * -0.5
-        #                     x.append(distance)
-        #                 else:
-        #                     if (obstacles[i]['x'] == 177 and player_x == 177):
-        #                         distance = obstacles[i]['y'] * 2
-        #                     elif (obstacles[i]['x'] == 410 and player_x == 410):
-        #                         distance = obstacles[i]['y'] * 2
-        #                     else:
-        #                         distance = obstacles[i]['y'] * -1
-        #                     x.append(distance)
-        #         x=x[:5]
-        # print(x)
-        # x=self.batch_normalize(x)
-        # print(x)
-        # print("kir khar")
-        # x=self.batch_normalize(x)
-        #
-        # return x
-        # filter those obstacles which passed
-        number=4
-        obstacles = list(filter(lambda d: d['y'] < 640, obstacles))
-        # only get {number} nearest obstacles
-        obstacles = sorted(obstacles, key=lambda d: d['y'], reverse=True)
-        # fly = list(filter(lambda d: (177 < d['x'] < 410) & (d['y'] > 300), obstacles))
-        if len(obstacles) < number:
-            obstacles += [{'x': 410, 'y': -100}] * (number - len(obstacles))
+        x.append(player_x)
+        if(len(obstacles)==0):
+            for i in range(4):
+                x.append(0)
         else:
-            obstacles = obstacles[:number]
-        obstacles = list(
-            map(lambda d: (d['y'] + 100) / (740) if d['x'] > 293 else -((d['y'] + 100) / (740)), obstacles))
-        '''if len(fly) > 0 :
-            fly = fly[0]
-            obstacles += [(((fly['x'] - 177)/233) * 2) - 1, (((fly['y'] + 100)/740) * 2) - 1]
-        else :
-            obstacles += [0, -1]'''
-        return obstacles
+            random.seed(1)
+            flag=random.randint(0,800)%2
+            if(flag):
+                if(len(obstacles)<4):
+                    for i in range(len(obstacles)):
+                        if(obstacles[i]['x']<300):
+                            x.append(obstacles[i]['y'])
+                        else:
+                            x.append(-obstacles[i]['y'])
+                    for i in range(4-len(obstacles)):
+                        x.append(0)
+                else:
+                    for i in range(len(obstacles)):
+                        if (obstacles[i]['x'] < 300):
+                            x.append(obstacles[i]['y'])
+                        else:
+                            x.append(-obstacles[i]['y'])
+                    x=x[:5]
+            else:
+                if (len(obstacles) < 4):
+                    for i in range(len(obstacles)):
+                        distance = math.sqrt(((obstacles[i]['y'] - player_y) ** 2 + (obstacles[i]['x'] - player_x) ** 2))
+                        if (obstacles[i]['x'] < 300):
+                            x.append(distance)
+                        elif (obstacles[i]['x'] == 410):
+                           x.append(-distance)
+                        else:
+                            x.append(-distance * 0.5)
+                for i in range(4 - len(obstacles)):
+                        x.append(0)
+                else:
+                    for i in range(len(obstacles)):
+                        distance = math.sqrt(
+                            ((obstacles[i]['y'] - player_y) ** 2 + (obstacles[i]['x'] - player_x) ** 2))
+                        if (obstacles[i]['x'] ==177):
+                            x.append(distance)
+                        elif(obstacles[i]['x'] ==410):
+                            x.append(-distance)
+                        else:
+                            x.append(-distance*0.5)
+                    x = x[:5]
+        x=self.batch_normalize(x)
+        return  x
+
 
     def think(self, screen_width, screen_height, obstacles, player_x, player_y):
         """
@@ -189,28 +136,16 @@ class Player(pygame.sprite.Sprite):
         """
         # TODO (change player's gravity here by calling self.change_gravity)
         input_array1 = self.make_input(screen_width, screen_height, obstacles, player_x, player_y)
-        # print(player_x, player_y, obstacles)
-        # [(player_x - 177) / 253] +
-        input_array=np.array([(player_x - 177) / 253]+input_array1)
+
+        input_array=np.array(input_array1)
         outputs = self.nn.forward(input_array)
         maximum = max(outputs)
-        # print(answer)
-        # print(input_array,outputs,maximum)
-        #
-        # if np.argmax(outputs) == 0 and np.max(outputs) > 0.8:
-        #     self.change_gravity("left")
-        # elif np.argmax(outputs) == 1 and np.max(outputs) > 0.8:
-        #     self.change_gravity("right")
+
         if (maximum == outputs[0]):
             # print("left")
             self.change_gravity('left')
         else:
             self.change_gravity('right')
-        # This is a test code that changes the gravity based on a random number. Remove it before your implementation.
-        # if random.randint(0, 2):
-        #     self.change_gravity('left')
-        # else:
-        #     self.change_gravity('right')
 
     def change_gravity(self, new_gravity):
         """
