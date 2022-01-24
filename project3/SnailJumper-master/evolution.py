@@ -3,6 +3,7 @@ import random
 from player import Player
 import numpy as np
 
+
 class Evolution:
     def __init__(self):
         self.game_mode = "Neuroevolution"
@@ -20,11 +21,11 @@ class Evolution:
         # TODO (Additional: Implement roulette wheel here)
         # TODO (Additional: Implement SUS here)
         # TODO (Additional :Implement Q tournament here)
-        #first create coppy of player
-        players_copy=[]
+        # first create coppy of player
+        players_copy = []
         for i in players:
             players_copy.append(i)
-        new_players=[]
+        new_players = []
         # #implement SUS
         # players_fittnes=[]
         # players_sorted=sorted(players_copy,key=lambda x:x.fitness)
@@ -45,16 +46,15 @@ class Evolution:
 
         # implement Q tournament
         for i in range(num_players):
-            temp_players=[]
+            temp_players = []
             for j in range(3):
-                x=random.randint(0,len(players_copy)-1)
+                x = random.randint(0, len(players_copy) - 1)
                 temp_players.append(players_copy[x])
-            best_fitness=temp_players[0]
+            best_fitness = temp_players[0]
             for player in temp_players:
-                if(player.fitness>best_fitness.fitness):
-                    best_fitness=player
+                if (player.fitness > best_fitness.fitness):
+                    best_fitness = player
             new_players.append(best_fitness)
-
 
         # TODO (Additional: Learning curve)
         return new_players
@@ -71,10 +71,10 @@ class Evolution:
         if first_generation:
             return [Player(self.game_mode) for _ in range(num_players)]
         else:
-            new_parents=[]
+            new_parents = []
             # TODO ( Parent selection and child generation )
             # TODO ( Select  parent with Q Tournament )
-       #sus
+            # sus
             players_fittnes = []
             players_sorted = sorted(prev_players, key=lambda x: x.fitness)
             fitness_sum = 0
@@ -92,49 +92,49 @@ class Evolution:
                 new_parents.append(players_sorted[count])
                 random_num += 1 / num_players
 
-       # # q tournumant
-       #      for i in range(num_players):
-       #          temp_players=[]
-       #          for j in range(3):
-       #              x=random.randint(0,len(prev_players)-1)
-       #              # print(x)
-       #              temp_players.append(prev_players[x])
-       #          best_fitness=temp_players[0]
-       #          for player in temp_players:
-       #              if(player.fitness>best_fitness.fitness):
-       #                  best_fitness=player
-       #          new_parents.append(best_fitness)
-            children=[]
-            ranger=int(num_players/2)
+            # # q tournumant
+            #      for i in range(num_players):
+            #          temp_players=[]
+            #          for j in range(3):
+            #              x=random.randint(0,len(prev_players)-1)
+            #              # print(x)
+            #              temp_players.append(prev_players[x])
+            #          best_fitness=temp_players[0]
+            #          for player in temp_players:
+            #              if(player.fitness>best_fitness.fitness):
+            #                  best_fitness=player
+            #          new_parents.append(best_fitness)
+            children = []
+            ranger = int(num_players / 2)
             for j in range(ranger):
-                parent1=random.randint(0,len(new_parents)-1)
-                parent2=random.randint(0,len(new_parents)-1)
+                parent1 = random.randint(0, len(new_parents) - 1)
+                parent2 = random.randint(0, len(new_parents) - 1)
 
-
-                while(parent1==parent2):
-                    parent2 = random.randint(0, len(new_parents)-1)
+                while (parent1 == parent2):
+                    parent2 = random.randint(0, len(new_parents) - 1)
                 parent1 = new_parents[parent1]
                 parent2 = new_parents[parent2]
-                children1=self.clone_player(parent1)
-                children2=self.clone_player(parent2)
+                children1 = self.clone_player(parent1)
+                children2 = self.clone_player(parent2)
                 for i in range(10):
-                    children1.nn.w[0][i]=parent2.nn.w[0][i]
-                    children2.nn.w[0][i]=parent1.nn.w[0][i]
-                for m in reversed(range(11,20)):
+                    children1.nn.w[0][i] = parent2.nn.w[0][i]
+                    children2.nn.w[0][i] = parent1.nn.w[0][i]
+                for m in reversed(range(11, 20)):
                     children1.nn.w[0][m] = parent2.nn.w[0][m]
                     children2.nn.w[0][m] = parent1.nn.w[0][m]
-                #mutation
-                children1,children2=self.mutate(children1,children2,3)
-                children1,children2=self.mutate(children1,children2,14)
+                # mutation
+                children1, children2 = self.mutate(children1, children2, 3)
+                children1, children2 = self.mutate(children1, children2, 14)
                 children.append(children1)
                 children.append(children2)
             # new_players = prev_players  # DELETE THIS AFTER YOUR IMPLEMENTATION
             return children
-    def mutate(self,children1,children2,k):
+
+    def mutate(self, children1, children2, k):
         for counter in range(5):
             children1.nn.w[0][k][counter] = random.uniform(0, 1)
             children2.nn.w[0][k][counter] = random.uniform(0, 1)
-        return children1,children2
+        return children1, children2
 
     def clone_player(self, player):
         """

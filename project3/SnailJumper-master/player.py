@@ -46,15 +46,16 @@ class Player(pygame.sprite.Sprite):
         :param n: length of second dimension of array
         :return: return normalized array
         """
-        avg=sum(x)/len(x)
+        avg = sum(x) / len(x)
         temp_sum = 0
         for j in range(len(x)):
             temp_sum += (x[j] - avg) ** 2
-        temp_sum=temp_sum/len(x)
+        temp_sum = temp_sum / len(x)
         for j in range(len(x)):
-            x[j] = ((x[j] - avg) / math.sqrt(temp_sum + 0.01))/4
+            x[j] = ((x[j] - avg) / math.sqrt(temp_sum + 0.01)) / 4
 
         return x
+
     def make_input(self, screen_width, screen_height, obstacles, player_x, player_y):
         """
                 Just creates input vector of the neural network
@@ -72,20 +73,20 @@ class Player(pygame.sprite.Sprite):
         """ multiply by  2 distance of obstacles which in pleyer way """
         x = []
         x.append(player_x)
-        if(len(obstacles)==0):
+        if (len(obstacles) == 0):
             for i in range(4):
                 x.append(0)
         else:
             random.seed(1)
-            flag=random.randint(0,800)%2
-            if(flag):
-                if(len(obstacles)<4):
+            flag = random.randint(0, 800) % 2
+            if (flag):
+                if (len(obstacles) < 4):
                     for i in range(len(obstacles)):
-                        if(obstacles[i]['x']<300):
+                        if (obstacles[i]['x'] < 300):
                             x.append(obstacles[i]['y'])
                         else:
                             x.append(-obstacles[i]['y'])
-                    for i in range(4-len(obstacles)):
+                    for i in range(4 - len(obstacles)):
                         x.append(0)
                 else:
                     for i in range(len(obstacles)):
@@ -93,33 +94,33 @@ class Player(pygame.sprite.Sprite):
                             x.append(obstacles[i]['y'])
                         else:
                             x.append(-obstacles[i]['y'])
-                    x=x[:5]
+                    x = x[:5]
             else:
                 if (len(obstacles) < 4):
                     for i in range(len(obstacles)):
-                        distance = math.sqrt(((obstacles[i]['y'] - player_y) ** 2 + (obstacles[i]['x'] - player_x) ** 2))
+                        distance = math.sqrt(
+                            ((obstacles[i]['y'] - player_y) ** 2 + (obstacles[i]['x'] - player_x) ** 2))
                         if (obstacles[i]['x'] < 300):
                             x.append(distance)
                         elif (obstacles[i]['x'] == 410):
-                           x.append(-distance)
+                            x.append(-distance)
                         else:
                             x.append(-distance * 0.5)
                 for i in range(4 - len(obstacles)):
-                        x.append(0)
+                    x.append(0)
                 else:
                     for i in range(len(obstacles)):
                         distance = math.sqrt(
                             ((obstacles[i]['y'] - player_y) ** 2 + (obstacles[i]['x'] - player_x) ** 2))
-                        if (obstacles[i]['x'] ==177):
+                        if (obstacles[i]['x'] == 177):
                             x.append(distance)
-                        elif(obstacles[i]['x'] ==410):
+                        elif (obstacles[i]['x'] == 410):
                             x.append(-distance)
                         else:
-                            x.append(-distance*0.5)
+                            x.append(-distance * 0.5)
                     x = x[:5]
-        x=self.batch_normalize(x)
-        return  x
-
+        x = self.batch_normalize(x)
+        return x
 
     def think(self, screen_width, screen_height, obstacles, player_x, player_y):
         """
@@ -137,7 +138,7 @@ class Player(pygame.sprite.Sprite):
         # TODO (change player's gravity here by calling self.change_gravity)
         input_array1 = self.make_input(screen_width, screen_height, obstacles, player_x, player_y)
 
-        input_array=np.array(input_array1)
+        input_array = np.array(input_array1)
         outputs = self.nn.forward(input_array)
         maximum = max(outputs)
 
