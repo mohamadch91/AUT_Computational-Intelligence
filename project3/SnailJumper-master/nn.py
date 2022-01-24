@@ -17,8 +17,8 @@ class NeuralNetwork:
         self.w=[]
         self.b=[]
         for i in range(len(layer_sizes)-1):
-            self.w.append (np.random.normal(size=(layer_sizes[i+1],layer_sizes[i] )))
-            self.b.append(np.zeros((1,layer_sizes[i+1])))
+            self.w.append (np.random.normal(0, 1, [layer_sizes[i+1], layer_sizes[i]]))
+            self.b.append(np.zeros([layer_sizes[i+1],1]))
 
 
     def activation(self, x):
@@ -37,18 +37,18 @@ class NeuralNetwork:
         :param n: length of second dimension of array
         :return: return normalized array
         """
-        print(x)
+        # print(x)
         sum=0
         for j in range(n):
-            sum+=x[0][j]
+            sum+=x[j]
         avg=sum/n
         temp_sum=0
         for j in range(n):
-            temp_sum+=(x[0][j]-avg)**2
+            temp_sum+=(x[j]-avg)**2
         temp_sum/=n
 
         for j in range(n):
-            x[0][j]=(x[0][j]-avg)/math.sqrt(temp_sum+0.01)
+            x[j]=(x[j]-avg)/math.sqrt(temp_sum+0.000001)
         return x
 
     def forward(self, x):
@@ -60,10 +60,9 @@ class NeuralNetwork:
         # TODO (Implement forward function here)
         s=[]
         for i in range(len(self.layers)-1):
-            if(i==0):
-                s=self.activation((self.w[i]@x)+self.b[i])
-                # s=self.batch_normalize(s,self.layers[i+1])
-
-            else:
-                s = self.activation((self.w[i]@s[0])+self.b[i])
-        return s[0]
+             if(i==0):
+                s=self.activation(self.w[i] @ x +self.b[i][0])
+                s=self.batch_normalize(s,self.layers[i+1])
+             else:
+                 s = self.activation(self.w[i] @ s + self.b[i][0])
+        return s

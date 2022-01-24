@@ -25,7 +25,6 @@ class Evolution:
         for i in players:
             players_copy.append(i)
         new_players=[]
-
         # #implement SUS
         # players_fittnes=[]
         # players_sorted=sorted(players_copy,key=lambda x:x.fitness)
@@ -43,7 +42,7 @@ class Evolution:
         #         sum+=players_fittnes[count]
         #     new_players.append(players_sorted[count])
         #     random_num+=1/num_players
-        #
+
         # implement Q tournament
         for i in range(num_players):
             temp_players=[]
@@ -75,17 +74,36 @@ class Evolution:
             new_parents=[]
             # TODO ( Parent selection and child generation )
             # TODO ( Select  parent with Q Tournament )
-            for i in range(num_players):
-                temp_players=[]
-                for j in range(3):
-                    x=random.randint(0,len(prev_players)-1)
-                    # print(x)
-                    temp_players.append(prev_players[x])
-                best_fitness=temp_players[0]
-                for player in temp_players:
-                    if(player.fitness>best_fitness.fitness):
-                        best_fitness=player
-                new_parents.append(best_fitness)
+       #sus
+            players_fittnes = []
+            players_sorted = sorted(prev_players, key=lambda x: x.fitness)
+            fitness_sum = 0
+            for player in players_sorted:
+                fitness_sum += player.fitness
+            for player in players_sorted:
+                players_fittnes.append(player.fitness / fitness_sum)
+            random_num = random.uniform(0, 1 / num_players)
+            sum = players_fittnes[0]
+            count = 0
+            for counter in range(num_players):
+                while ((random_num > sum)):
+                    count += 1
+                    sum += players_fittnes[count]
+                new_parents.append(players_sorted[count])
+                random_num += 1 / num_players
+
+       # # q tournumant
+       #      for i in range(num_players):
+       #          temp_players=[]
+       #          for j in range(3):
+       #              x=random.randint(0,len(prev_players)-1)
+       #              # print(x)
+       #              temp_players.append(prev_players[x])
+       #          best_fitness=temp_players[0]
+       #          for player in temp_players:
+       #              if(player.fitness>best_fitness.fitness):
+       #                  best_fitness=player
+       #          new_parents.append(best_fitness)
             children=[]
             ranger=int(num_players/2)
             for j in range(ranger):
@@ -99,18 +117,24 @@ class Evolution:
                 parent2 = new_parents[parent2]
                 children1=self.clone_player(parent1)
                 children2=self.clone_player(parent2)
-                for i in range(3):
+                for i in range(10):
                     children1.nn.w[0][i]=parent2.nn.w[0][i]
                     children2.nn.w[0][i]=parent1.nn.w[0][i]
+                for m in reversed(range(11,20)):
+                    children1.nn.w[0][m] = parent2.nn.w[0][m]
+                    children2.nn.w[0][m] = parent1.nn.w[0][m]
                 #mutation
-                for k in range(6,10):
-                    for counter in range(4):
-                        children1.nn.w[0][k][counter]=random.uniform(0,1)
-                        children2.nn.w[0][k][counter]=random.uniform(0,1)
+                children1,children2=self.mutate(children1,children2,3)
+                children1,children2=self.mutate(children1,children2,14)
                 children.append(children1)
                 children.append(children2)
             # new_players = prev_players  # DELETE THIS AFTER YOUR IMPLEMENTATION
             return children
+    def mutate(self,children1,children2,k):
+        for counter in range(5):
+            children1.nn.w[0][k][counter] = random.uniform(0, 1)
+            children2.nn.w[0][k][counter] = random.uniform(0, 1)
+        return children1,children2
 
     def clone_player(self, player):
         """
