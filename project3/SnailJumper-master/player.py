@@ -77,48 +77,26 @@ class Player(pygame.sprite.Sprite):
             for i in range(4):
                 x.append(0)
         else:
-            random.seed(1)
-            flag = random.randint(0, 800) % 2
-            if (flag):
-                if (len(obstacles) < 4):
-                    for i in range(len(obstacles)):
-                        if (obstacles[i]['x'] < 300):
-                            x.append(obstacles[i]['y'])
-                        else:
-                            x.append(-obstacles[i]['y'])
-                    for i in range(4 - len(obstacles)):
-                        x.append(0)
-                else:
-                    for i in range(len(obstacles)):
-                        if (obstacles[i]['x'] < 300):
-                            x.append(obstacles[i]['y'])
-                        else:
-                            x.append(-obstacles[i]['y'])
-                    x = x[:5]
-            else:
-                if (len(obstacles) < 4):
-                    for i in range(len(obstacles)):
-                        distance = math.sqrt(
-                            ((obstacles[i]['y'] - player_y) ** 2 + (obstacles[i]['x'] - player_x) ** 2))
-                        if (obstacles[i]['x'] < 300):
-                            x.append(distance)
-                        elif (obstacles[i]['x'] == 410):
-                            x.append(-distance)
-                        else:
-                            x.append(-distance * 0.5)
+            if (len(obstacles) < 4):
+                for i in range(len(obstacles)):
+                    if (obstacles[i]['x'] ==177):
+                        x.append(obstacles[i]['y'])
+                    elif(obstacles[i]['x'] ==410):
+                        x.append(-obstacles[i]['y'])
+                    else:
+                        x.append(obstacles[i]['y']*0.5)
                 for i in range(4 - len(obstacles)):
                     x.append(0)
-                else:
-                    for i in range(len(obstacles)):
-                        distance = math.sqrt(
-                            ((obstacles[i]['y'] - player_y) ** 2 + (obstacles[i]['x'] - player_x) ** 2))
-                        if (obstacles[i]['x'] == 177):
-                            x.append(distance)
-                        elif (obstacles[i]['x'] == 410):
-                            x.append(-distance)
-                        else:
-                            x.append(-distance * 0.5)
-                    x = x[:5]
+            else:
+                for i in range(len(obstacles)):
+                    if (obstacles[i]['x'] ==177):
+                        x.append(obstacles[i]['y'])
+                    elif (obstacles[i]['x'] == 410):
+                        x.append(-obstacles[i]['y'])
+                    else:
+                        x.append(obstacles[i]['y'] * 0.5)
+                x = x[:5]
+
         x = self.batch_normalize(x)
         return x
 

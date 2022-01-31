@@ -21,6 +21,23 @@ class Evolution:
         # TODO (Additional: Implement roulette wheel here)
         # TODO (Additional: Implement SUS here)
         # TODO (Additional :Implement Q tournament here)
+        # finding best , worst,avg fitness and plot on another file
+        best=players[0].fitness
+        worst=players[0].fitness
+        avg=0
+        for i in players:
+            if(best<i.fitness):
+                best=i.fitness
+            if(worst>i.fitness):
+                worst=i.fitness
+            avg+=i.fitness
+        avg/=len(players)
+        f=open("avrage.txt",'a')
+        f.write(str(best)+" ")
+        f.write(str(worst)+" ")
+        f.write(str(avg)+" ")
+        f.write("\n")
+        f.close()
         # first create coppy of player
         players_copy = []
         for i in players:
@@ -124,7 +141,10 @@ class Evolution:
                     children2.nn.w[0][m] = parent1.nn.w[0][m]
                 # mutation
                 children1, children2 = self.mutate(children1, children2, 3)
+                children1, children2 = self.mutate(children1, children2, 7)
                 children1, children2 = self.mutate(children1, children2, 14)
+                children1, children2 = self.mutate(children1, children2, 17)
+                children1, children2 = self.mutate(children1, children2, 19)
                 children.append(children1)
                 children.append(children2)
             # new_players = prev_players  # DELETE THIS AFTER YOUR IMPLEMENTATION
